@@ -14,15 +14,19 @@ public class DriverPage extends AppCompatActivity {
 
 
     private  RecyclerView recyclerView;
-    private ArrayList students;
+    private String[] students;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_page);
         recyclerView = findViewById(R.id.recycler_view);
-        students = new ArrayList();
-        students.add("Manal");
-        getSupportActionBar().setTitle("Students");
+       students = new String[4];
+        students[0]="Manal";
+        students[1]="Manal";
+        students[2]="Manal";
+        students[3]="Manal";
+
+       // getSupportActionBar().setTitle("Students");
 
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
         ListAdapter listAdapter = new ListAdapter(DriverPage.this, students);

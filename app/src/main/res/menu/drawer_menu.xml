@@ -24,12 +24,14 @@
 
     <item android:title=" ">
 
-
+<menu>
             <item
+                
                 android:id="@+id/nav_logout_student"
                 android:icon="@drawable/outline_power_settings_new_black_18dp"
                 android:title="Log out" />
 
-    </item>
 
+</menu>
+    </item>
 </menu>

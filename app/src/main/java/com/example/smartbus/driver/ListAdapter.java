@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private static Context mContext;
-    private ArrayList students;
+    private String[] students;
     private ListAdapter mAdapterAzkar;
     private ListAdapter.OnItemClickListener mListener;
 
@@ -32,7 +32,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         mListener = listener;
     }
 
-    public ListAdapter(Context context, ArrayList students) {
+    public ListAdapter(Context context,String[] students) {
         this.mContext = context;
         this.students = students;
     }
@@ -47,13 +47,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        holder.studentName.setText(students.indexOf(position));
+        holder.studentName.setText(students[position]);
         Glide.with(mContext).load(R.drawable.scan).into(holder.studentImage);
     }
 
     @Override
     public int getItemCount() {
-        return students.size();
+        return students.length;
     }
 
     public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -84,10 +84,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
                 public void onClick(View v) {
 
 
-                    if (utilities.getVisibility() == View.GONE)
                         utilities.setVisibility(View.VISIBLE);
-                    else
-                        utilities.setVisibility(View.GONE);
                     /*              if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {

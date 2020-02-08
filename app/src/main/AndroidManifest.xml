@@ -11,12 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SigninActivity"></activity>
-        <activity android:name=".student.StudentPage"  android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".driver.DriverDrawer"></activity>
+        <activity android:name=".student.StudentDrawer" />
+        <activity android:name=".SigninActivity" />
+        <activity
+            android:name=".student.StudentPage"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".driver.StudentProfile" />
         <activity android:name=".driver.RateStudent" />
-        <activity android:name=".driver.DriverPage" android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".driver.DriverPage"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

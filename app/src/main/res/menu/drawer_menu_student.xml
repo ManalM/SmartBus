@@ -8,13 +8,14 @@
         android:icon="@drawable/edit"
         android:title="Edit Profile" />
     </group>
-    <item android:title=" ">
+    <item android:title=" " >
 
-
+<menu>
         <item
             android:id="@+id/nav_logout_driver"
             android:icon="@drawable/outline_power_settings_new_black_18dp"
             android:title="Log out" />
-
+</menu>
     </item>
+
 </menu>

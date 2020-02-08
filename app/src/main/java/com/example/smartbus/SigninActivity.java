@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.smartbus.driver.DriverDrawer;
 import com.example.smartbus.driver.DriverPage;
 
 public class SigninActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class SigninActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Toast.makeText(SigninActivity.this, "login", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SigninActivity.this, com.example.smartbus.driver.DriverPage.class));
+                startActivity(new Intent(SigninActivity.this, DriverDrawer.class));
 
 
 
