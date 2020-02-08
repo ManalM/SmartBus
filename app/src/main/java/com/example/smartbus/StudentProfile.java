@@ -21,6 +21,7 @@ public class StudentProfile extends AppCompatActivity {
         email = findViewById(R.id.retrieve_student_email);
         health = findViewById(R.id.retrieve_student_health);
         address = findViewById(R.id.retrieve_student_address);
+        getActionBar().setTitle("Student Information");
 
     }
 }

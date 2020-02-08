@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
 
+        getActionBar().setTitle("Log In");
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

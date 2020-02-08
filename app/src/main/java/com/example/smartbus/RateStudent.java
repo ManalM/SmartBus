@@ -22,5 +22,7 @@ public class RateStudent extends AppCompatActivity {
         comment= findViewById(R.id.student_comment);
         name=findViewById(R.id.rating_name);
         send =findViewById(R.id.send_student_rate);
+        getActionBar().setTitle("Rating Student");
+
     }
 }

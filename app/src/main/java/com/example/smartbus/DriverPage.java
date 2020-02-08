@@ -23,6 +23,8 @@ public class DriverPage extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         students = new ArrayList();
         students.add("Manal");
+        getActionBar().setTitle("Students");
+
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
         ListAdapter listAdapter = new ListAdapter(DriverPage.this, students);
         recyclerView.setAdapter(listAdapter);
