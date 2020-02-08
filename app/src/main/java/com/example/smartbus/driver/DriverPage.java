@@ -1,16 +1,15 @@
-package com.example.smartbus;
+package com.example.smartbus.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.example.smartbus.R;
 
 import java.util.ArrayList;
-
+import com.example.smartbus.driver.ListAdapter;
 public class DriverPage extends AppCompatActivity {
 
 
@@ -23,7 +22,7 @@ public class DriverPage extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         students = new ArrayList();
         students.add("Manal");
-        getActionBar().setTitle("Students");
+        getSupportActionBar().setTitle("Students");
 
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
         ListAdapter listAdapter = new ListAdapter(DriverPage.this, students);

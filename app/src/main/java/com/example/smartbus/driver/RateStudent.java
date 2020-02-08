@@ -1,4 +1,4 @@
-package com.example.smartbus;
+package com.example.smartbus.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.example.smartbus.R;
 
 public class RateStudent extends AppCompatActivity {
 
@@ -22,7 +24,7 @@ public class RateStudent extends AppCompatActivity {
         comment= findViewById(R.id.student_comment);
         name=findViewById(R.id.rating_name);
         send =findViewById(R.id.send_student_rate);
-        getActionBar().setTitle("Rating Student");
+        getSupportActionBar().setTitle("Rating Student");
 
     }
 }

@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 <style name="Base.TextAppearance.Widget.AppCompat.Toolbar.Title." parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
 
 <item name="android:textColor">@color/textColor</item>

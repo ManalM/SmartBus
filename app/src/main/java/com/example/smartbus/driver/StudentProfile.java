@@ -1,10 +1,12 @@
-package com.example.smartbus;
+package com.example.smartbus.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.smartbus.R;
 
 public class StudentProfile extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class StudentProfile extends AppCompatActivity {
         email = findViewById(R.id.retrieve_student_email);
         health = findViewById(R.id.retrieve_student_health);
         address = findViewById(R.id.retrieve_student_address);
-        getActionBar().setTitle("Student Information");
+        getSupportActionBar().setTitle("Student Information");
 
     }
 }

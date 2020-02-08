@@ -1,4 +1,4 @@
-package com.example.smartbus;
+package com.example.smartbus.driver;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.smartbus.R;
 
 import java.util.ArrayList;
 

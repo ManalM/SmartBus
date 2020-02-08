@@ -7,7 +7,7 @@
 
     android:background="@color/background"
 
-    tools:context=".StudentProfile">
+    tools:context=".driver.StudentProfile">
 
     <ImageView
         android:layout_width="match_parent"
