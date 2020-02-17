@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,7 +21,7 @@ import com.example.smartbus.R;
 import org.w3c.dom.Text;
 
 
-public class RateDriver extends Fragment {
+public class RateDriver extends AppCompatActivity {
 
     Button save;
     EditText comment;
@@ -27,17 +29,16 @@ public class RateDriver extends Fragment {
     TextView name;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_rate_driver);
 
-        View v = inflater.inflate(R.layout.fragment_rate_driver, container, false);
+        save = findViewById(R.id.send_driver_rate);
+        comment =findViewById(R.id.driver_comment);
+        ratingBar = findViewById(R.id.ratingBar_driver);
+        name = findViewById(R.id.rating_name_driver);
 
-        save = v.findViewById(R.id.send_driver_rate);
-        comment = v.findViewById(R.id.driver_comment);
-        ratingBar = v.findViewById(R.id.ratingBar_driver);
-        name = v.findViewById(R.id.rating_name_driver);
-        return v;
     }
+
 
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,23 +16,22 @@ import android.widget.EditText;
 
 import com.example.smartbus.R;
 
-public class StudentPayment extends Fragment {
+public class StudentPayment extends AppCompatActivity {
 
     private EditText cardNumber , cvc, holder,date;
     private Button save;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_student_payment, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_student_payment);
 
-
-        cardNumber = v.findViewById(R.id.card_number);
-        cvc = v.findViewById(R.id.cvc);
-        date = v.findViewById(R.id.exp_date);
-        holder = v.findViewById(R.id.card_holder);
-        save = v.findViewById(R.id.save_payment);
-        return v;
+        cardNumber = findViewById(R.id.card_number);
+        cvc = findViewById(R.id.cvc);
+        date = findViewById(R.id.exp_date);
+        holder = findViewById(R.id.card_holder);
+        save = findViewById(R.id.save_payment);
     }
+
 
 }

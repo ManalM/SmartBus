@@ -29,7 +29,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
     public StudentListAdapter(Context context , ArrayList<String> arrayList){
         mContext = context;
-        arrayList = arrayList;
+        students = arrayList;
     }
     @NonNull
     @Override
@@ -48,7 +48,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return students.size();
     }
 
     public class viewHolder extends RecyclerView.ViewHolder{

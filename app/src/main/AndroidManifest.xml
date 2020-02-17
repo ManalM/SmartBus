@@ -11,12 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD1IuCG-ecYL2jqSOMaQXndsKQhl_W049o" />
         <activity android:name=".SigninActivity" />
+        <activity android:name=".student.RateDriver" android:parentActivityName=".student.StudentPage"/>
+        <activity android:name=".student.DriverFeedback" android:parentActivityName=".student.StudentPage"/>
+        <activity android:name=".student.StudentPayment" android:parentActivityName=".student.StudentPage"/>
+        <activity android:name=".student.EditStudentProfile" android:parentActivityName=".student.StudentPage"/>
         <activity
             android:name=".student.StudentPage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".driver.StudentProfile" />
-        <activity android:name=".driver.RateStudent" />
+        <activity android:name=".driver.StudentProfile" android:parentActivityName=".driver.DriverPage" />
+        <activity android:name=".driver.RateStudent" android:parentActivityName=".driver.DriverPage"/>
         <activity android:name=".driver.EditDriverProfile" android:parentActivityName=".driver.DriverPage"/>
         <activity android:name=".student.StudentList"/>
         <activity

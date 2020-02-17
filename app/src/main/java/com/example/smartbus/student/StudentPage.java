@@ -33,12 +33,12 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
 
         drawer = findViewById(R.id.student_drawer);
 
-        NavigationView navigationView = findViewById(R.id.navigation_view_student);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navigation_view_student);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -56,22 +56,24 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new EditStudentProfile()).commit();
+
+                startActivity(new Intent(StudentPage.this, EditStudentProfile.class));
+
                 break;
             case R.id.nav_payment:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new StudentPayment()).commit();
+
+                startActivity(new Intent(StudentPage.this,  StudentPayment.class));
+
                 break;
             case R.id.nav_feedback:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new DriverFeedback()).commit();
+
+                startActivity(new Intent(StudentPage.this, DriverFeedback.class));
+
                 break;
             case R.id.nav_rate_driver:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new RateDriver()).commit();
+                startActivity(new Intent(StudentPage.this,RateDriver.class));
                 break;
-            case R.id.nav_logout_driver:
+            case R.id.nav_logout_student:
                 startActivity(new Intent(StudentPage.this, SigninActivity.class));
                 break;
 

@@ -27,8 +27,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_margin="30dp"
+            android:layout_height="250dp"
+            android:layout_margin="20dp"
             app:cardBackgroundColor="#E0DBC7">
 
             <RelativeLayout
