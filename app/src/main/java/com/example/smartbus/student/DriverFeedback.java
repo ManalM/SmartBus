@@ -20,6 +20,6 @@ public class DriverFeedback extends Fragment {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_driver_feedback, container, false);
         return v;
-    }
+        }
 
-}
+        }

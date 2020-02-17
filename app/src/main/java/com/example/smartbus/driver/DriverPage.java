@@ -30,7 +30,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_page);
-
+        //-------------------Drawer and Toolbar-----------------
         Toolbar toolbar = findViewById(R.id.driver_toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.driver_drawer);
@@ -42,6 +42,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //---------------------recyclerView-----------------------
 
         recyclerView = findViewById(R.id.recycler_view);
        students = new String[4];

@@ -10,8 +10,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.smartbus.driver.DriverDrawer;
 import com.example.smartbus.driver.DriverPage;
+import com.example.smartbus.student.StudentList;
+import com.example.smartbus.student.StudentPage;
 
 public class SigninActivity extends AppCompatActivity {
 
@@ -34,10 +35,11 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                Toast.makeText(SigninActivity.this, "login", Toast.LENGTH_SHORT).show();
+           if (username.getText().toString().equals("D"))
                 startActivity(new Intent(SigninActivity.this,DriverPage.class));
-
-
+           else if(username.getText().toString().equals("S"))
+               startActivity(new Intent(SigninActivity.this, StudentList.class));
+           else Toast.makeText(SigninActivity.this, "press D for Driver and S for student", Toast.LENGTH_SHORT).show();
 
             }
         });

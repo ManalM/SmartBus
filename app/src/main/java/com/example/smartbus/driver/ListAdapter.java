@@ -25,7 +25,6 @@ import java.util.ArrayList;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private static Context mContext;
     private String[] students;
-    private ListAdapter mAdapterAzkar;
     private ListAdapter.OnItemClickListener mListener;
 
     public interface OnItemClickListener {
