@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,23 +19,22 @@ import com.example.smartbus.R;
 import java.util.zip.Inflater;
 
 
-public class EditDriverProfile extends Fragment {
+public class EditDriverProfile extends AppCompatActivity {
 
     private EditText name, phone,email;
     Button save;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_edit_driver_profile, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_edit_driver_profile);
+        name = findViewById(R.id.driver_name);
+        phone = findViewById(R.id.driver_phone);
 
-        name = v.findViewById(R.id.driver_name);
-        phone = v.findViewById(R.id.driver_phone);
-
-        email = v.findViewById(R.id.driver_email);
-        save = v.findViewById(R.id.save_driver_info);
-        return v;
+        email = findViewById(R.id.driver_email);
+        save = findViewById(R.id.save_driver_info);
     }
+
+
 
 }

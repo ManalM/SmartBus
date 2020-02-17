@@ -2,6 +2,9 @@ package com.example.smartbus.driver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -48,7 +52,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         holder.studentName.setText(students[position]);
-        Glide.with(mContext).load(R.drawable.scan).into(holder.studentImage);
+     Glide.with(mContext).load(R.drawable.profile).into(holder.studentImage);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private ImageView studentImage;
+        private ImageView studentImage,scanImage,profileImage;
         private TextView studentName;
 
         private TextView scan, rate, profile;
@@ -85,6 +89,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
 
                         utilities.setVisibility(View.VISIBLE);
+
+                //    scan.setBackgroundDrawable(new Drawable(). )
                     /*              if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
@@ -104,20 +110,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
                 Intent intent = null;
                 switch (v.getId()) {
                     case R.id.scan:
-                        //   intent = new Intent(mContext, ScanActivity.class);
+                         //intent = new Intent(mContext, ScanActivity.class);
                         Toast.makeText(mContext, "Scan", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.rate_student:
                         intent = new Intent(mContext, RateStudent.class);
+                        mContext.startActivity(intent);
                         break;
 
                     case R.id.profile:
                         intent = new Intent(mContext, StudentProfile.class);
+                        mContext.startActivity(intent);
                         break;
 
                 }
-                mContext.startActivity(intent);
+
             }
         }
     }

@@ -21,9 +21,9 @@ public class DriverDrawer extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_drawer);
+
         Toolbar toolbar = findViewById(R.id.driver_toolbar);
         setSupportActionBar(toolbar);
-
         drawer = findViewById(R.id.driver_drawer);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -45,8 +45,8 @@ public class DriverDrawer extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.nav_profile_Driver:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new EditDriverProfile()).commit();
+                startActivity(new Intent(DriverDrawer.this, EditDriverProfile.class));
+
                 break;
 
             case R.id.nav_logout_driver:
