@@ -45,11 +45,11 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         //---------------------recyclerView-----------------------
 
         recyclerView = findViewById(R.id.recycler_view);
-       students = new String[4];
-        students[0]="Manal";
-        students[1]="Manal";
-        students[2]="Manal";
-        students[3]="Manal";
+       students = new String[3];
+        students[0]="Dhai";
+        students[1]="Fatima";
+        students[2]="Anwar";
+
 
        // getSupportActionBar().setTitle("Students");
 
