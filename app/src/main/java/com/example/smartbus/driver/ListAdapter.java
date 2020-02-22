@@ -35,6 +35,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         mListener = listener;
     }
 
+    // constructor
     public ListAdapter(Context context,String[] students) {
         this.mContext = context;
         this.students = students;
@@ -50,6 +51,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+        // put element of array here
         holder.studentName.setText(students[position]);
      Glide.with(mContext).load(R.drawable.profile).into(holder.studentImage);
     }
@@ -81,7 +83,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             rate.setOnClickListener(this);
             profile.setOnClickListener(this);
 
-
+// if press on each item show menu
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -102,7 +104,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
         }
 
-
+// click for each menu item
         @Override
         public void onClick(View v) {
             if (utilities.getVisibility() == View.VISIBLE) {

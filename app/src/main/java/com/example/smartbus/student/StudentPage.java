@@ -48,7 +48,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
 
         NavigationView navigationView = findViewById(R.id.navigation_view_student);
         navigationView.setNavigationItemSelectedListener(this);
-
+        // -------------------mapView-----------------
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
@@ -69,6 +69,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         }
     }
 
+    //menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){

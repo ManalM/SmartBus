@@ -28,6 +28,8 @@ public class StudentList extends AppCompatActivity {
 
         StudentListAdapter studentListAdapter = new StudentListAdapter(StudentList.this, arrayList);
         recyclerView.setAdapter(studentListAdapter);
+
+
         studentListAdapter.setOnItemClickListener(new StudentListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

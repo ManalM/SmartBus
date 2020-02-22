@@ -21,11 +21,12 @@ import com.example.smartbus.SigninActivity;
 import com.example.smartbus.driver.ListAdapter;
 import com.google.android.material.navigation.NavigationView;
 
-public class DriverPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class DriverPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private  RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private String[] students;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +45,15 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
         //---------------------recyclerView-----------------------
 
+        //connect with xml
         recyclerView = findViewById(R.id.recycler_view);
-       students = new String[3];
-        students[0]="Dhai";
-        students[1]="Fatima";
-        students[2]="Anwar";
+        students = new String[3];
+        students[0] = "Dhai";
+        students[1] = "Fatima";
+        students[2] = "Anwar";
 
 
-       // getSupportActionBar().setTitle("Students");
+        // getSupportActionBar().setTitle("Students");
 
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
         ListAdapter listAdapter = new ListAdapter(DriverPage.this, students);
@@ -66,6 +68,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         });*/
 
     }
+
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -75,10 +78,12 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+
+    // menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.nav_profile_Driver:
                 startActivity(new Intent(DriverPage.this, EditDriverProfile.class));
 

@@ -17,13 +17,16 @@ import com.example.smartbus.student.StudentPage;
 public class SigninActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
-    private EditText username,pass;
+    private EditText username, pass;
     private Button login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
+
+        // connect with xml
         username = (EditText) findViewById(R.id.username);
         pass = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
@@ -31,16 +34,21 @@ public class SigninActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         getSupportActionBar().setTitle("Log In");
 
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-           if (username.getText().toString().equals("D"))
-                startActivity(new Intent(SigninActivity.this,DriverPage.class));
-           else if(username.getText().toString().equals("S"))
-               startActivity(new Intent(SigninActivity.this, StudentList.class));
-           else Toast.makeText(SigninActivity.this, "press D for Driver and S for student", Toast.LENGTH_SHORT).show();
 
+                if (username.getText().toString().equals("D")) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    startActivity(new Intent(SigninActivity.this, DriverPage.class));
+                } else if (username.getText().toString().equals("S")) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    startActivity(new Intent(SigninActivity.this, StudentList.class));
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(SigninActivity.this, "press D for Driver and S for student", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
