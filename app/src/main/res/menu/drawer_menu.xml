@@ -10,11 +10,11 @@
             android:title="Edit Profile" />
         <item
             android:id="@+id/nav_payment"
-            android:icon="@drawable/outline_payment_black_18dp"
+            android:icon="@drawable/wallet"
             android:title="Online Payment" />
         <item
             android:id="@+id/nav_feedback"
-            android:icon="@drawable/outline_feedback_black_18dp"
+            android:icon="@drawable/feedback"
             android:title="Driver Feedback" />
         <item
             android:id="@+id/nav_rate_driver"
@@ -28,7 +28,7 @@
             <item
                 
                 android:id="@+id/nav_logout_student"
-                android:icon="@drawable/outline_power_settings_new_black_18dp"
+                android:icon="@drawable/log"
                 android:title="Log out" />
 
 

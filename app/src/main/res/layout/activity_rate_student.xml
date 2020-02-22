@@ -9,13 +9,12 @@
     tools:context=".driver.RateStudent">
 
 
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="20sp"
-            app:srcCompat="@drawable/profile" />
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="15dp"
+        android:src="@drawable/logo" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -39,17 +38,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
 
+                        android:gravity="left"
+                        android:layout_margin="5dp"
                         android:text="Mohammed"
                         android:textColor="#000" />
 
                     <RatingBar
                         android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
+                        android:layout_width="200dp"
+
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                       />
                 </LinearLayout>
 
                 <EditText

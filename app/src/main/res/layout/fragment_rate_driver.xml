@@ -1,78 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".student.RateDriver">
 
 
     <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/bus_back" />
+        android:layout_height="150dp"
+        android:layout_margin="15dp"
+        android:src="@drawable/logo" />
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="250dp"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="#E0DBC7">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="20sp"
-            app:srcCompat="@drawable/profile" />
+            android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_margin="20dp"
-            app:cardBackgroundColor="#E0DBC7">
-
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/rating_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:id="@+id/rating_layout"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/rating_name_driver"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:gravity="left"
 
-                    <TextView
-                        android:id="@+id/rating_name_driver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                    android:text="Mohammed"
+                    android:textColor="#000" />
 
-                        android:text="Mohammed"
-                        android:textColor="#000" />
+                <RatingBar
+                    android:id="@+id/ratingBar_driver"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-                    <RatingBar
-                        android:id="@+id/ratingBar_driver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                </LinearLayout>
+            <EditText
+                android:id="@+id/driver_comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rating_layout"
+                android:layout_margin="20dp"
+                android:background="#fff"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
-                <EditText
-                    android:id="@+id/driver_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/rating_layout"
-                    android:layout_margin="20dp"
-                    android:background="#fff"
-                    android:ems="10"
-                    android:inputType="textMultiLine" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/send_driver_rate"
@@ -85,4 +74,4 @@
         android:enabled="false"
         android:text="@string/send"
         android:textColor="@color/textColor" />
-</RelativeLayout>
+</LinearLayout>

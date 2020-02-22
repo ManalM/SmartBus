@@ -13,7 +13,7 @@
 <menu>
         <item
             android:id="@+id/nav_logout_driver"
-            android:icon="@drawable/outline_power_settings_new_black_18dp"
+            android:icon="@drawable/log"
             android:title="Log out" />
 </menu>
     </item>

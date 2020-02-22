@@ -14,22 +14,22 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD1IuCG-ecYL2jqSOMaQXndsKQhl_W049o" />
-        <activity android:name=".SigninActivity" />
-        <activity android:name=".student.RateDriver" android:parentActivityName=".student.StudentPage"/>
-        <activity android:name=".student.DriverFeedback" android:parentActivityName=".student.StudentPage"/>
-        <activity android:name=".student.StudentPayment" android:parentActivityName=".student.StudentPage"/>
-        <activity android:name=".student.EditStudentProfile" android:parentActivityName=".student.StudentPage"/>
+        <activity android:name=".SigninActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".student.RateDriver" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
+        <activity android:name=".student.DriverFeedback" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
+        <activity android:name=".student.StudentPayment" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
+        <activity android:name=".student.EditStudentProfile" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
         <activity
             android:name=".student.StudentPage"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".driver.StudentProfile" android:parentActivityName=".driver.DriverPage" />
-        <activity android:name=".driver.RateStudent" android:parentActivityName=".driver.DriverPage"/>
-        <activity android:name=".driver.EditDriverProfile" android:parentActivityName=".driver.DriverPage"/>
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait" />
+        <activity android:name=".driver.StudentProfile" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
+        <activity android:name=".driver.RateStudent" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
+        <activity android:name=".driver.EditDriverProfile" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
         <activity android:name=".student.StudentList"/>
         <activity
             android:name=".driver.DriverPage"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
