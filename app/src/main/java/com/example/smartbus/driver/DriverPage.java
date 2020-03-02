@@ -9,23 +9,51 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.smartbus.R;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import com.example.smartbus.SigninActivity;
 import com.example.smartbus.driver.ListAdapter;
+import com.example.smartbus.server.Constants;
+import com.example.smartbus.server.RecyclerViewHttps;
+import com.example.smartbus.server.SharedPrefManager;
+import com.example.smartbus.server.https;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DriverPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
-    private String[] students;
+    public static ListAdapter listAdapter;
+    private String urlAddress = "https://172.20.10.11/getStudent.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +75,19 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         //connect with xml
         recyclerView = findViewById(R.id.recycler_view);
-        students = new String[3];
-        students[0] = "Dhai";
-        students[1] = "Fatima";
-        students[2] = "Anwar";
 
 
+        RecyclerViewHttps https = new RecyclerViewHttps(DriverPage.this, urlAddress, recyclerView, "id_driver");
+        https.execute();
         // getSupportActionBar().setTitle("Students");
 
+        //   StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+
+    /*  DataParser dataParser  = new DataParser(DriverPage.this,urlAddress,recyclerView);
+
+      dataParser.execute();*/
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
-        ListAdapter listAdapter = new ListAdapter(DriverPage.this, students);
-        recyclerView.setAdapter(listAdapter);
 
-
-    /*    listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        });*/
 
     }
 
@@ -96,5 +118,77 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /// --------------------- retrieve  data ------------------------------------
+
+    public static class DataParser extends AsyncTask<Void, Void, Integer> {
+        Context c;
+        String jsonData;
+        RecyclerView recyclerView;
+
+        ProgressDialog progressDialog;
+        ArrayList<String> spase = new ArrayList<>();
+
+        public DataParser(Context c, String jsonData, RecyclerView lv) {
+            this.c = c;
+            this.jsonData = jsonData;
+            this.recyclerView = lv;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(c);
+            progressDialog.setTitle("Retrieving data");
+            progressDialog.setMessage("Please wait");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return this.getData();
+        }
+
+        @Override
+        protected void onPostExecute(Integer b) {
+            super.onPostExecute(b);
+            if (b == 1) {
+
+                listAdapter = new ListAdapter(c, spase);
+                recyclerView.setAdapter(listAdapter);
+
+            } else {
+                Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
+            }
+            progressDialog.dismiss();
+        }
+
+        private int getData() {
+
+            try {
+
+                JSONArray ja = new JSONArray(jsonData);
+
+                JSONObject jo = null;
+
+                spase.clear();
+                for (int i = 0; i < ja.length(); i++) {
+
+                    jo = ja.getJSONObject(i);
+
+                    String name = jo.getString("child_name");
+
+                    spase.add(name);
+                }
+
+                return 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return 0;
+        }
     }
 }

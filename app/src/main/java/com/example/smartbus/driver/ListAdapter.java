@@ -24,19 +24,12 @@ import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private static Context mContext;
-    private String[] students;
-    private ListAdapter.OnItemClickListener mListener;
+    private ArrayList<String> students;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
 
-    public void setOnItemClickListener(ListAdapter.OnItemClickListener listener) {
-        mListener = listener;
-    }
 
     // constructor
-    public ListAdapter(Context context,String[] students) {
+    public ListAdapter(Context context, ArrayList<String> students) {
         this.mContext = context;
         this.students = students;
     }
@@ -46,19 +39,19 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         View view = mInflater.inflate(R.layout.driver_item_list, parent, false);
-        return new ListAdapter.viewHolder(view, mListener);
+        return new ListAdapter.viewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         // put element of array here
-        holder.studentName.setText(students[position]);
+        holder.studentName.setText(students.get(position));
      Glide.with(mContext).load(R.drawable.profile).into(holder.studentImage);
     }
 
     @Override
     public int getItemCount() {
-        return students.length;
+        return students.size();
     }
 
     public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -68,7 +61,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
         private TextView scan, rate, profile;
         private LinearLayout utilities;
 
-        public viewHolder(@NonNull final View itemView, final ListAdapter.OnItemClickListener listener) {
+        public viewHolder(@NonNull final View itemView) {
             super(itemView);
 
             studentName = itemView.findViewById(R.id.student_name);
@@ -90,14 +83,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
 
 
                         utilities.setVisibility(View.VISIBLE);
-
-                //    scan.setBackgroundDrawable(new Drawable(). )
-                    /*              if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }*/
 
                 }
             });

@@ -20,39 +20,40 @@
             android:layout_marginBottom="30dp"
             app:srcCompat="@drawable/logo" />
 
-        <EditText
-            android:id="@+id/student_name"
+
+    <EditText
+        android:id="@+id/student_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
+        android:inputType="number"
             android:backgroundTint="@color/lightGreen"
-            android:text="NAME"
+        android:hint="Phone Number"
             android:textColor="#8B887B" />
 
+    <!--       <EditText
+               android:id="@+id/student_email"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="20dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="20dp"
+               android:backgroundTint="@color/lightGreen"
+               android:text="Email"
+               android:textColor="#8B887B" />-->
         <EditText
-            android:id="@+id/student_phone"
+            android:id="@+id/student_health"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
+            android:inputType="text"
             android:backgroundTint="@color/lightGreen"
-            android:text="Phone Number"
+            android:hint="HEALTH"
             android:textColor="#8B887B" />
-
-        <EditText
-            android:id="@+id/student_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="@color/lightGreen"
-            android:text="Email"
-            android:textColor="#8B887B" />
-
         <Button
             android:id="@+id/save_student_info"
             android:layout_width="wrap_content"
