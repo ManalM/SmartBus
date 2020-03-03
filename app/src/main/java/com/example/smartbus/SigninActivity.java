@@ -72,32 +72,13 @@ public class SigninActivity extends AppCompatActivity {
 
 
                 login();
-        /*        if (username.getText().toString().equals("D")) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(SigninActivity.this, DriverPage.class));
-                } else if (username.getText().toString().equals("S")) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    startActivity(new Intent(SigninActivity.this, StudentList.class));
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(SigninActivity.this, "press D for Driver and S for student", Toast.LENGTH_SHORT).show();
-                }*/
+
             }
         });
     }
 
     private void login() {
 
-/*        SharedPrefManager.getInstance(getApplicationContext())
-                .userLogin(
-                        11,
-                        username.getText().toString(),
-                        null
-                );
-
-
-        startActivity(new Intent(getApplicationContext(), DriverPage.class));
-        finish();*/
 
 /*
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://172.20.10.11/login.php", null, new Response.Listener<JSONObject>() {
@@ -146,7 +127,7 @@ public class SigninActivity extends AppCompatActivity {
             }
         };
 */
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://sql111.eb2a.com/login.php", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.loginUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -182,7 +163,7 @@ public class SigninActivity extends AppCompatActivity {
 
                 Toast.makeText(
                         getApplicationContext(),
-                        error.getMessage()+"hh",
+                        error.getMessage(),
                         Toast.LENGTH_LONG
                 ).show();
             }

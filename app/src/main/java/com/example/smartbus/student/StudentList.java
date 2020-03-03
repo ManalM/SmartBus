@@ -16,6 +16,7 @@ import com.example.smartbus.R;
 import com.example.smartbus.SigninActivity;
 import com.example.smartbus.driver.DriverPage;
 import com.example.smartbus.driver.ListAdapter;
+import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.RecyclerViewHttps;
 import com.example.smartbus.server.https;
 
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
 public class StudentList extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private String urlAddress = "https://172.20.10.11/getStudent.php";
+    //   private String urlAddress = "https://172.20.10.11/getStudent.php";
     public static StudentListAdapter studentListAdapter;
 
     @Override
@@ -40,7 +41,7 @@ public class StudentList extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(StudentList.this, 1));
 
 
-        RecyclerViewHttps https = new RecyclerViewHttps(StudentList.this, urlAddress, recyclerView, "id_parent");
+        RecyclerViewHttps https = new RecyclerViewHttps(StudentList.this, Constants.getChildrenUrl, recyclerView, "id_parent");
         https.execute();
 
     }

@@ -67,12 +67,13 @@ public class RecyclerViewHttps extends AsyncTask<Void, Integer, String> {
             StudentList.DataParser s = new StudentList.DataParser(c, aVoid, recyclerView);
             s.execute();
         } else {
-            Toast.makeText(c, "not good" + aVoid, Toast.LENGTH_LONG).show();
+            Toast.makeText(c, aVoid, Toast.LENGTH_LONG).show();
 
         }
 
     }
 
+    // connecting with server
     private String downloadData() {
         InputStream is = null;
         String line = null;

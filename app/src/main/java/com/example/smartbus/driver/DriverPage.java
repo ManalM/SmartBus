@@ -53,7 +53,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
     public static ListAdapter listAdapter;
-    private String urlAddress = "https://172.20.10.11/getStudent.php";
+    //   private String urlAddress = "https://172.20.10.11/getStudent.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         recyclerView = findViewById(R.id.recycler_view);
 
 
-        RecyclerViewHttps https = new RecyclerViewHttps(DriverPage.this, urlAddress, recyclerView, "id_driver");
+        RecyclerViewHttps https = new RecyclerViewHttps(DriverPage.this, Constants.getStudentUrl, recyclerView, "id_driver");
         https.execute();
         // getSupportActionBar().setTitle("Students");
 
@@ -120,7 +120,10 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-    /// --------------------- retrieve  data ------------------------------------
+    //-------------------------------------------------------------------------
+    /// --------------------- retrieve  data ----------------------------------
+    //-------------------------------------------------------------------------
+
 
     public static class DataParser extends AsyncTask<Void, Void, Integer> {
         Context c;
@@ -164,6 +167,8 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
             progressDialog.dismiss();
         }
 
+
+        //-- reading json code-----
         private int getData() {
 
             try {

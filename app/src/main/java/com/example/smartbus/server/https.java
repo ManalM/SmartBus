@@ -71,6 +71,7 @@ public class https extends AsyncTask<String, Void, String> {
             String userId = SharedPrefManager.getInstance(c).getUsername();
 
 
+            // sending data
             Uri.Builder builder = new Uri.Builder()
                     .appendQueryParameter(userID, userId)
                     .appendQueryParameter("health", health)
