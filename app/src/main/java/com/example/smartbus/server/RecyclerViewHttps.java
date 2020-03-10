@@ -95,7 +95,6 @@ public class RecyclerViewHttps extends AsyncTask<Void, Integer, String> {
                     .appendQueryParameter(userID, userId);
 
             String query = builder.build().getEncodedQuery();
-
             OutputStream os = httpURLConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));

@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class StudentList extends AppCompatActivity {
     private RecyclerView recyclerView;
-    //   private String urlAddress = "https://172.20.10.11/getStudent.php";
     public static StudentListAdapter studentListAdapter;
 
     @Override

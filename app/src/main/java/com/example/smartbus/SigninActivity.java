@@ -80,53 +80,6 @@ public class SigninActivity extends AppCompatActivity {
     private void login() {
 
 
-/*
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "http://172.20.10.11/login.php", null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                  //  JSONObject obj = new JSONObject(response);
-                    if(!response.getBoolean("error")){
-                        SharedPrefManager.getInstance(getApplicationContext())
-                                .userLogin(
-                                        response.getInt("id"),
-                                        response.getString("username"),
-                                        null
-                                );
-
-                        startActivity(new Intent(getApplicationContext(), DriverPage.class));
-                        finish();
-                    }else{
-                        Toast.makeText(
-                                getApplicationContext(),
-                                response.getString("message"),
-                                Toast.LENGTH_LONG
-                        ).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(
-                        getApplicationContext(),
-                        error.getMessage()+"hh",
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parms = new HashMap<>();
-                parms.put("username", username.getText().toString().trim());
-                parms.put("password", pass.getText().toString().trim());
-                return parms;
-            }
-        };
-*/
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.loginUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -139,8 +92,13 @@ public class SigninActivity extends AppCompatActivity {
                                         obj.getString("username"),
                                        null
                                 );
-                        startActivity(new Intent(getApplicationContext(), DriverPage.class));
-                        finish();
+                        if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("d")) {
+                            startActivity(new Intent(getApplicationContext(), DriverPage.class));
+                            finish();
+                        } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
+                            startActivity(new Intent(getApplicationContext(), StudentList.class));
+                            finish();
+                        }
                     }else{
                         Toast.makeText(
                                 getApplicationContext(),
@@ -151,11 +109,7 @@ public class SigninActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            /* if(response.contains("1")){
-                 startActivity(new Intent(getApplicationContext(), DriverPage.class));
-             }else{
-                 Toast.makeText(SigninActivity.this, "wrong username or password ", Toast.LENGTH_SHORT).show();
-             }*/
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -176,8 +130,6 @@ public class SigninActivity extends AppCompatActivity {
                 return parms;
             }
         };
-
-        //  Volley.newRequestQueue(this).add(stringRequest);
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
