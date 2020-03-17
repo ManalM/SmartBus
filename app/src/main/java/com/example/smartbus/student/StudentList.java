@@ -83,7 +83,9 @@ public class StudentList extends AppCompatActivity {
                 studentListAdapter.setOnItemClickListener(new StudentListAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        c.startActivity(new Intent(c, StudentPage.class));
+                        Intent intent = new Intent(c, StudentPage.class);
+                        intent.putExtra("name", spase.get(position));
+                        c.startActivity(intent);
 
                     }
                 });

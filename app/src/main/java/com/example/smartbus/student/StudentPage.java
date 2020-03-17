@@ -31,14 +31,18 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
     private MapView mapView;
     private GoogleMap gmap;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+    String nameOfStudent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_page);
         //-------------------Drawer and Toolbar-----------------
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        setSupportActionBar(toolbar);
+        Intent intent = getIntent();
+        nameOfStudent = intent.getStringExtra("name");
+        toolbar.setTitle(nameOfStudent);
         drawer = findViewById(R.id.student_drawer);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -75,7 +79,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         switch (menuItem.getItemId()){
             case R.id.nav_profile:
 
-                startActivity(new Intent(StudentPage.this, EditStudentProfile.class));
+                startActivity(new Intent(StudentPage.this, EditStudentProfile.class).putExtra("name", nameOfStudent));
 
                 break;
             case R.id.nav_payment:

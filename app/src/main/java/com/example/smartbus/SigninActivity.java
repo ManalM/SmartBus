@@ -98,6 +98,9 @@ public class SigninActivity extends AppCompatActivity {
                         } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
                             startActivity(new Intent(getApplicationContext(), StudentList.class));
                             finish();
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), StudentList.class));
+                            finish();
                         }
                     }else{
                         Toast.makeText(

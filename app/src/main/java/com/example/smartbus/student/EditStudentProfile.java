@@ -1,5 +1,6 @@
 package com.example.smartbus.student;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -32,12 +33,13 @@ public class EditStudentProfile extends AppCompatActivity implements View.OnClic
 
     private void updateDB() {
         https https = new https(EditStudentProfile.this, Constants.updateStudentProfile, "id_parent");
-        https.execute(health.getText().toString(), phone.getText().toString());
+        https.execute(health.getText().toString(), phone.getText().toString(), getIntent().getStringExtra("name"));
     }
 
     @Override
     public void onClick(View v) {
 
         updateDB();
+
     }
 }

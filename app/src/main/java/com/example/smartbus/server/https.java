@@ -30,9 +30,9 @@ public class https extends AsyncTask<String, Void, String> {
 
     String urlAddres;
 
-    ProgressDialog progressDialog;
 
     String userID;
+
 
     public https(Context c, String url, String userId) {
         this.c = c;
@@ -45,10 +45,7 @@ public class https extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(c);
-        progressDialog.setTitle("Updating ... ");
-        progressDialog.setMessage("Please wait ...");
-        progressDialog.show();
+
     }
 
     @Override
@@ -61,6 +58,7 @@ public class https extends AsyncTask<String, Void, String> {
 
             String health = strings[0];
             String phone = strings[1];
+            String studentName = strings[2];
             URL url = new URL(urlAddres);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -75,7 +73,8 @@ public class https extends AsyncTask<String, Void, String> {
             Uri.Builder builder = new Uri.Builder()
                     .appendQueryParameter(userID, userId)
                     .appendQueryParameter("health", health)
-                    .appendQueryParameter("phone", phone);
+                    .appendQueryParameter("phone", phone)
+                    .appendQueryParameter("first_name", studentName);
 
 
             String query = builder.build().getEncodedQuery();
@@ -139,89 +138,16 @@ public class https extends AsyncTask<String, Void, String> {
 
             Toast.makeText(c, aVoid, Toast.LENGTH_SHORT).show();
         } else {
-            progressDialog.setMessage(aVoid);
-
-            Toast.makeText(c, "Record updated Failed" + aVoid, Toast.LENGTH_LONG).show();
-
-        }
-
-    }
-
 /*
-    private void downloadData() {
-        InputStream is = null;
-        String line = null;
+          ////  progressDialog.setMessage(aVoid);
+*/
 
+            Toast.makeText(c, aVoid, Toast.LENGTH_LONG).show();
 
-
-        try {
-
-            String name =
-            URL url = new URL(urlAddres);
-
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.setDoOutput(true);
-
-           String userId= SharedPrefManager.getInstance(c).getUsername();
-
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter(userID, userId);
-
-            String query = builder.build().getEncodedQuery();
-
-            OutputStream os = httpURLConnection.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-
-            writer.write(query);
-            writer.flush();
-            writer.close();
-            os.close();
-            httpURLConnection.connect();
-            is = new BufferedInputStream(httpURLConnection.getInputStream());
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-
-
-            StringBuilder stringBuilder = new StringBuilder();
-            if (stringBuilder != null) {
-
-
-                while ((line = bufferedReader.readLine()) != null) {
-
-                    stringBuilder.append(line + "\n");
-
-                }
-            } else {
-                return null;
-            }
-
-            return stringBuilder.toString().trim();
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
 
-
-        return null;
     }
-*/
+
+
 
 }
