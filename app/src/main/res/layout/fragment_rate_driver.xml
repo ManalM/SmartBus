@@ -71,7 +71,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30sp"
         android:background="@drawable/button"
-        android:enabled="false"
         android:text="@string/send"
         android:textColor="@color/textColor" />
 </LinearLayout>

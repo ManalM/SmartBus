@@ -93,7 +93,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
 
                 break;
             case R.id.nav_rate_driver:
-                startActivity(new Intent(StudentPage.this,RateDriver.class));
+                startActivity(new Intent(StudentPage.this, RateDriver.class).putExtra("name", nameOfStudent));
                 break;
             case R.id.nav_logout_student:
                 startActivity(new Intent(StudentPage.this, SigninActivity.class));

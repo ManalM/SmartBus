@@ -9,4 +9,5 @@ public class Constants {
     public static final String updateStudentProfile = url + "insertStudentData.php";
     public static final String getStudentUrl = url + "getStudent.php";
     public static final String getChildrenUrl = url + "getChildren.php";
+    public static final String driverRateUrl = url + "insertDriverRate.php";
 }

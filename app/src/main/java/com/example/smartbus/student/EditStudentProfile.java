@@ -32,7 +32,7 @@ public class EditStudentProfile extends AppCompatActivity implements View.OnClic
     }
 
     private void updateDB() {
-        https https = new https(EditStudentProfile.this, Constants.updateStudentProfile, "id_parent");
+        https https = new https(EditStudentProfile.this, Constants.updateStudentProfile, "id_parent", "info");
         https.execute(health.getText().toString(), phone.getText().toString(), getIntent().getStringExtra("name"));
     }
 

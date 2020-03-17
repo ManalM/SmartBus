@@ -33,12 +33,13 @@ public class https extends AsyncTask<String, Void, String> {
 
     String userID;
 
+    String tag;
 
-    public https(Context c, String url, String userId) {
+    public https(Context c, String url, String userId, String tag) {
         this.c = c;
         this.urlAddres = url;
         userID = userId;
-
+        this.tag = tag;
     }
 
 
@@ -56,9 +57,10 @@ public class https extends AsyncTask<String, Void, String> {
 
         try {
 
-            String health = strings[0];
-            String phone = strings[1];
-            String studentName = strings[2];
+            String param0 = strings[0];
+            String param1 = strings[1];
+
+            String param2 = strings[2];
             URL url = new URL(urlAddres);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -66,16 +68,20 @@ public class https extends AsyncTask<String, Void, String> {
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
 
-            String userId = SharedPrefManager.getInstance(c).getUsername();
-
-
-            // sending data
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter(userID, userId)
-                    .appendQueryParameter("health", health)
-                    .appendQueryParameter("phone", phone)
-                    .appendQueryParameter("first_name", studentName);
-
+            Uri.Builder builder = new Uri.Builder();
+            if (tag.equals("info")) {
+                // sending data
+                String userId = SharedPrefManager.getInstance(c).getUsername();
+                builder.appendQueryParameter(userID, userId)
+                        .appendQueryParameter("health", param0)
+                        .appendQueryParameter("phone", param1)
+                        .appendQueryParameter("first_name", param2);
+            } else if (tag.equals("rate")) {
+                builder.appendQueryParameter("student_name", userID)
+                        .appendQueryParameter("comment", param0)
+                        .appendQueryParameter("stars", param1)
+                        .appendQueryParameter("driver_name", param2);
+            }
 
             String query = builder.build().getEncodedQuery();
 
