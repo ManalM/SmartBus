@@ -20,12 +20,12 @@ import java.util.ArrayList;
 
 public class DriverFeedback extends AppCompatActivity {
     private RecyclerView recyclerView;
-
+    private int rating;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //---------------------recyclerView-----------------------
-
+//todo:take driver feedback from database
         setContentView(R.layout.fragment_driver_feedback);
         recyclerView = findViewById(R.id.diver_feedback);
         ArrayList<String> names  = new ArrayList<>();
@@ -33,9 +33,10 @@ public class DriverFeedback extends AppCompatActivity {
 
         names.add("ahmed");
         comments.add("Good boy");
+        rating = 1;
         recyclerView.setLayoutManager(new GridLayoutManager(DriverFeedback.this, 1));
-
-        DriverFeedbackAdapter studentListAdapter = new DriverFeedbackAdapter(DriverFeedback.this, names,comments);
+//todo:why it is list ???? for one student only
+        DriverFeedbackAdapter studentListAdapter = new DriverFeedbackAdapter(DriverFeedback.this, names, comments, rating);
         recyclerView.setAdapter(studentListAdapter);
     }
 

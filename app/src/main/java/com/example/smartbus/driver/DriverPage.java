@@ -53,7 +53,6 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
     public static ListAdapter listAdapter;
-    //   private String urlAddress = "https://172.20.10.11/getStudent.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,13 +78,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         RecyclerViewHttps https = new RecyclerViewHttps(DriverPage.this, Constants.getStudentUrl, recyclerView, "id_driver");
         https.execute();
-        // getSupportActionBar().setTitle("Students");
 
-        //   StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
-    /*  DataParser dataParser  = new DataParser(DriverPage.this,urlAddress,recyclerView);
-
-      dataParser.execute();*/
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
 
 
@@ -107,8 +100,8 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         switch (menuItem.getItemId()) {
             case R.id.nav_profile_Driver:
-                startActivity(new Intent(DriverPage.this, EditDriverProfile.class));
-
+                startActivity(new Intent(DriverPage.this, EditDriverProfile.class).putExtra("name", "mohammed"));
+                //todo:put name of driver from database instead
                 break;
 
             case R.id.nav_logout_driver:

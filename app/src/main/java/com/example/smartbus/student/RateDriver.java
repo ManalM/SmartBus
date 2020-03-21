@@ -38,6 +38,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.example.smartbus.server.Constants.rateTag;
+
 
 public class RateDriver extends AppCompatActivity {
 
@@ -70,7 +72,7 @@ public class RateDriver extends AppCompatActivity {
     }
 
     private void updateDB() {
-        https https = new https(RateDriver.this, Constants.driverRateUrl, studentName, "rate");
+        https https = new https(RateDriver.this, Constants.driverRateUrl, studentName, rateTag);
         https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
 
     }

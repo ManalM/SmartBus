@@ -97,16 +97,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
                 switch (v.getId()) {
                     case R.id.scan:
                          //intent = new Intent(mContext, ScanActivity.class);
+                        //todo:scan and send notification to student
                         Toast.makeText(mContext, "Scan", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.rate_student:
-                        intent = new Intent(mContext, RateStudent.class);
+                        intent = new Intent(mContext, RateStudent.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
                         mContext.startActivity(intent);
                         break;
 
                     case R.id.profile:
-                        intent = new Intent(mContext, StudentProfile.class);
+                        intent = new Intent(mContext, StudentProfile.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
                         mContext.startActivity(intent);
                         break;
 

@@ -2,16 +2,28 @@ package com.example.smartbus.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartbus.R;
+import com.example.smartbus.server.Constants;
+import com.example.smartbus.server.HttpsRetrieve;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class StudentProfile extends AppCompatActivity {
 
     ImageView image;
-    TextView Fname ,Lname , phone, address,email, health;
+    private static TextView Fname, Lname, phone, address, email, health;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +36,82 @@ public class StudentProfile extends AppCompatActivity {
         health = findViewById(R.id.retrieve_student_health);
         address = findViewById(R.id.retrieve_student_address);
         getSupportActionBar().setTitle("Student Information");
+        Intent intent = getIntent();
+        String fname = intent.getStringExtra("nameOfStudent");
+        new HttpsRetrieve(StudentProfile.this, fname, Constants.getStudentInfoUrl).execute();
+    }
 
+    public static class DataParser extends AsyncTask<Void, Void, Integer> {
+        Context c;
+        String jsonData;
+        ProgressDialog progressDialog;
+
+        public DataParser(Context context, String json) {
+            c = context;
+            jsonData = json;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(c);
+            progressDialog.setTitle("Retrieving data");
+            progressDialog.setMessage("Please wait");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return this.getData();
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer b) {
+            super.onPostExecute(b);
+            if (b == 1) {
+                Toast.makeText(c, "Good", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
+            }
+            progressDialog.dismiss();
+        }
+
+
+        //-- reading json code-----
+        private int getData() {
+
+            try {
+
+                JSONArray ja = new JSONArray(jsonData);
+
+                JSONObject jo = null;
+
+                for (int i = 0; i < ja.length(); i++) {
+
+                    jo = ja.getJSONObject(i);
+
+                    String name = jo.getString("first_name");
+                    String lname = jo.getString("last_name");
+                    String phonee = jo.getString("phone");
+                    String healthh = jo.getString("health");
+                    String addresss = jo.getString("adress");
+                    String emaill = jo.getString("email");
+                    Fname.setText(name);
+                    Lname.setText(lname);
+                    phone.setText(phonee);
+                    address.setText(addresss);
+                    email.setText(emaill);
+                    health.setText(healthh);
+                }
+
+                return 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return 0;
+        }
     }
 }

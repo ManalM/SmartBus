@@ -7,9 +7,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.smartbus.driver.DriverPage;
+import com.example.smartbus.driver.StudentProfile;
 import com.example.smartbus.student.StudentList;
 
 import java.io.BufferedInputStream;
@@ -24,47 +23,60 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.example.smartbus.server.Constants.infoDriverTag;
-import static com.example.smartbus.server.Constants.infoTag;
-import static com.example.smartbus.server.Constants.rateTag;
-
-public class https extends AsyncTask<String, Void, String> {
-
+public class HttpsRetrieve extends AsyncTask<Void, Integer, String> {
     Context c;
 
     String urlAddres;
-
+    ProgressDialog progressDialog;
 
     String userID;
 
-    String tag;
+    public HttpsRetrieve(Context context, String userid, String url) {
 
-    public https(Context c, String url, String userId, String tag) {
-        this.c = c;
-        this.urlAddres = url;
-        userID = userId;
-        this.tag = tag;
+        c = context;
+        this.userID = userid;
+        urlAddres = url;
+
     }
-
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-
+        progressDialog = new ProgressDialog(c);
+        progressDialog.setTitle("Retrieving");
+        progressDialog.setMessage("Please wait ...");
+        progressDialog.show();
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected String doInBackground(Void... voids) {
+        String data = downloadData();
+        return data;
+    }
+
+    @Override
+    protected void onPostExecute(String aVoid) {
+        super.onPostExecute(aVoid);
+        progressDialog.dismiss();
+        if (aVoid != null) {
+            StudentProfile.DataParser p = new StudentProfile.DataParser(c, aVoid);
+            p.execute();
+
+        } else {
+            Toast.makeText(c, aVoid, Toast.LENGTH_LONG).show();
+
+        }
+
+    }
+
+    // connecting with server
+    private String downloadData() {
         InputStream is = null;
         String line = null;
 
 
         try {
 
-            String param0 = strings[0];
-            String param1 = strings[1];
-
-            String param2 = strings[2];
             URL url = new URL(urlAddres);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -72,28 +84,13 @@ public class https extends AsyncTask<String, Void, String> {
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
 
-            Uri.Builder builder = new Uri.Builder();
-            if (tag.equals(infoTag)) {
-                // sending data
-                String userId = SharedPrefManager.getInstance(c).getUsername();
-                builder.appendQueryParameter(userID, userId)
-                        .appendQueryParameter("health", param0)
-                        .appendQueryParameter("phone", param1)
-                        .appendQueryParameter("first_name", param2);
-            } else if (tag.equals(rateTag)) {
-                builder.appendQueryParameter("student_name", userID)
-                        .appendQueryParameter("comment", param0)
-                        .appendQueryParameter("stars", param1)
-                        .appendQueryParameter("driver_name", param2);
-            } else if (tag.equals(infoDriverTag)) {
-                String userId = SharedPrefManager.getInstance(c).getUsername();
-                builder.appendQueryParameter(userID, userId)
-                        .appendQueryParameter("phone", param1)
-                        .appendQueryParameter("email", param0);
-            }
+            //  String userId = SharedPrefManager.getInstance(c).getUsername();
+
+
+            Uri.Builder builder = new Uri.Builder()
+                    .appendQueryParameter("first_name", userID);
 
             String query = builder.build().getEncodedQuery();
-
             OutputStream os = httpURLConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
@@ -144,25 +141,4 @@ public class https extends AsyncTask<String, Void, String> {
 
         return null;
     }
-
-    @Override
-    protected void onPostExecute(String aVoid) {
-        //  super.onPostExecute(aVoid);
-        // progressDialog.dismiss();
-        if (aVoid != null) {
-
-            Toast.makeText(c, aVoid, Toast.LENGTH_SHORT).show();
-        } else {
-/*
-          ////  progressDialog.setMessage(aVoid);
-*/
-
-            Toast.makeText(c, aVoid, Toast.LENGTH_LONG).show();
-
-        }
-
-    }
-
-
-
 }

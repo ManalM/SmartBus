@@ -15,8 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.smartbus.R;
+import com.example.smartbus.server.Constants;
+import com.example.smartbus.server.https;
+import com.example.smartbus.student.EditStudentProfile;
 
 import java.util.zip.Inflater;
+
+import static com.example.smartbus.server.Constants.infoDriverTag;
 
 
 public class EditDriverProfile extends AppCompatActivity {
@@ -28,11 +33,23 @@ public class EditDriverProfile extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_driver_profile);
-        name = findViewById(R.id.driver_name);
+        //   name = findViewById(R.id.driver_name);
         phone = findViewById(R.id.driver_phone);
 
         email = findViewById(R.id.driver_email);
         save = findViewById(R.id.save_driver_info);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDB();
+
+            }
+        });
+    }
+
+    private void updateDB() {
+        https https = new https(EditDriverProfile.this, Constants.updateDriverProfile, "id_diver", infoDriverTag);
+        https.execute(phone.getText().toString(), email.getText().toString());
     }
 
 

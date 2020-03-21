@@ -14,6 +14,8 @@ import com.example.smartbus.R;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.https;
 
+import static com.example.smartbus.server.Constants.infoTag;
+
 
 public class EditStudentProfile extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,7 +34,7 @@ public class EditStudentProfile extends AppCompatActivity implements View.OnClic
     }
 
     private void updateDB() {
-        https https = new https(EditStudentProfile.this, Constants.updateStudentProfile, "id_parent", "info");
+        https https = new https(EditStudentProfile.this, Constants.updateStudentProfile, "id_parent", infoTag);
         https.execute(health.getText().toString(), phone.getText().toString(), getIntent().getStringExtra("name"));
     }
 
