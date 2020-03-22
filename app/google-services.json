@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "490613803848",
+    "firebase_url": "https://smartbus-f862e.firebaseio.com",
+    "project_id": "smartbus-f862e",
+    "storage_bucket": "smartbus-f862e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490613803848:android:8c5bcae30d241af722017d",
+        "android_client_info": {
+          "package_name": "com.example.smartbus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490613803848-rg9h31dn3hb9u6o2sgnno3lllmo24pqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Dh9qXkmHAtwE_Wn6jmmiQMM8tkGYRzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490613803848-rg9h31dn3hb9u6o2sgnno3lllmo24pqi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

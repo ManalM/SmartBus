@@ -15,58 +15,59 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".driver.Scan"></activity>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD1IuCG-ecYL2jqSOMaQXndsKQhl_W049o" />
         <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:name="com.google.android.gms.vision.barcode.Barcode"
             android:value="barcode" />
 
+        <activity android:name=".driver.Scan"></activity>
         <activity
             android:name=".SigninActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".student.RateDriver"
             android:parentActivityName=".student.StudentPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".student.DriverFeedback"
             android:parentActivityName=".student.StudentPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".student.StudentPayment"
             android:parentActivityName=".student.StudentPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".student.EditStudentProfile"
             android:parentActivityName=".student.StudentPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".student.StudentPage"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".driver.StudentProfile"
             android:parentActivityName=".driver.DriverPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".driver.RateStudent"
             android:parentActivityName=".driver.DriverPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".driver.EditDriverProfile"
             android:parentActivityName=".driver.DriverPage"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity android:name=".student.StudentList" />
         <activity
             android:name=".driver.DriverPage"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

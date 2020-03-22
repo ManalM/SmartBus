@@ -33,6 +33,7 @@ import static com.example.smartbus.server.Constants.User;
 
 public class Scan extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_REQUEST = 100;
     SurfaceView surfaceView;
     CameraSource cameraSource;
     BarcodeDetector barcodeDetector;
@@ -57,9 +58,13 @@ public class Scan extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
                     if (ActivityCompat.checkSelfPermission(Scan.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                        return;
+                        ActivityCompat.requestPermissions(Scan.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                MY_PERMISSIONS_REQUEST);
 
-                    cameraSource.start(holder);
+                    else
+
+                        cameraSource.start(holder);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -88,7 +93,8 @@ public class Scan extends AppCompatActivity {
 
                     Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     v.vibrate(100);
-                    sendNotification();
+                    if (qr.valueAt(0).displayValue.equals(1))
+                        sendNotification();
 
                 }
             }
