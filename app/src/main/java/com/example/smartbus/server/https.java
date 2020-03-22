@@ -61,10 +61,8 @@ public class https extends AsyncTask<String, Void, String> {
 
         try {
 
-            String param0 = strings[0];
-            String param1 = strings[1];
+            String param0, param1, param2;
 
-            String param2 = strings[2];
             URL url = new URL(urlAddres);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -75,17 +73,27 @@ public class https extends AsyncTask<String, Void, String> {
             Uri.Builder builder = new Uri.Builder();
             if (tag.equals(infoTag)) {
                 // sending data
+                param0 = strings[0];
+                param1 = strings[1];
+
+                param2 = strings[2];
                 String userId = SharedPrefManager.getInstance(c).getUsername();
                 builder.appendQueryParameter(userID, userId)
                         .appendQueryParameter("health", param0)
                         .appendQueryParameter("phone", param1)
                         .appendQueryParameter("first_name", param2);
             } else if (tag.equals(rateTag)) {
+                param0 = strings[0];
+                param1 = strings[1];
+
+                param2 = strings[2];
                 builder.appendQueryParameter("student_name", userID)
                         .appendQueryParameter("comment", param0)
                         .appendQueryParameter("stars", param1)
                         .appendQueryParameter("driver_name", param2);
             } else if (tag.equals(infoDriverTag)) {
+                param0 = strings[0];
+                param1 = strings[1];
                 String userId = SharedPrefManager.getInstance(c).getUsername();
                 builder.appendQueryParameter(userID, userId)
                         .appendQueryParameter("phone", param1)

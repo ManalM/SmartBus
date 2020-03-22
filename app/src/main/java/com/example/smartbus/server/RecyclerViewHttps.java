@@ -61,8 +61,8 @@ public class RecyclerViewHttps extends AsyncTask<Void, Integer, String> {
         super.onPostExecute(aVoid);
         progressDialog.dismiss();
         if (aVoid != null) {
-            DriverPage.DataParser p = new DriverPage.DataParser(c, aVoid, recyclerView);
-            p.execute();
+/*            DriverPage.DataParser p = new DriverPage.DataParser(c, aVoid, recyclerView);
+            p.execute();*/
 
             StudentList.DataParser s = new StudentList.DataParser(c, aVoid, recyclerView);
             s.execute();

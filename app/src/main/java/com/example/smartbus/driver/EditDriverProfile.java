@@ -48,7 +48,7 @@ public class EditDriverProfile extends AppCompatActivity {
     }
 
     private void updateDB() {
-        https https = new https(EditDriverProfile.this, Constants.updateDriverProfile, "id_diver", infoDriverTag);
+        https https = new https(EditDriverProfile.this, Constants.updateDriverProfile, "id_driver", infoDriverTag);
         https.execute(phone.getText().toString(), email.getText().toString());
     }
 

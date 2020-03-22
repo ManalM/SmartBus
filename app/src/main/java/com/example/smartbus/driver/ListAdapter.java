@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.smartbus.R;
+import com.example.smartbus.student.StudentListAdapter;
 
 import java.util.ArrayList;
 
@@ -26,7 +29,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     private static Context mContext;
     private ArrayList<String> students;
 
+    private ListAdapter.OnItemClickListener mListener;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(ListAdapter.OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     // constructor
     public ListAdapter(Context context, ArrayList<String> students) {
@@ -39,7 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         View view = mInflater.inflate(R.layout.driver_item_list, parent, false);
-        return new ListAdapter.viewHolder(view);
+        return new ListAdapter.viewHolder(view, mListener);
     }
 
     @Override
@@ -55,13 +66,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
     }
 
     public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private ImageView studentImage,scanImage,profileImage;
+        private ImageView studentImage;
         private TextView studentName;
 
         private TextView scan, rate, profile;
-        private LinearLayout utilities;
+        private CardView utilities;
 
-        public viewHolder(@NonNull final View itemView) {
+        public viewHolder(@NonNull final View itemView, final ListAdapter.OnItemClickListener listener) {
             super(itemView);
 
             studentName = itemView.findViewById(R.id.student_name);
@@ -80,40 +91,57 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.viewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (listener != null) {
+                                int position = getAdapterPosition();
+                                if (position != RecyclerView.NO_POSITION) {
+                                    clickItem();
+                                    Log.i("tag", "In adapter");
 
+                                    listener.onItemClick(position);
+                                }
+                            }
 
-                        utilities.setVisibility(View.VISIBLE);
+                        }
+                    });
 
                 }
             });
 
         }
 
-// click for each menu item
-        @Override
-        public void onClick(View v) {
-            if (utilities.getVisibility() == View.VISIBLE) {
-                Intent intent = null;
-                switch (v.getId()) {
-                    case R.id.scan:
-                         //intent = new Intent(mContext, ScanActivity.class);
-                        //todo:scan and send notification to student
-                        Toast.makeText(mContext, "Scan", Toast.LENGTH_SHORT).show();
-                        break;
+        protected void clickItem() {
+            utilities.setVisibility(View.VISIBLE);
 
-                    case R.id.rate_student:
-                        intent = new Intent(mContext, RateStudent.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
-                        mContext.startActivity(intent);
-                        break;
-
-                    case R.id.profile:
-                        intent = new Intent(mContext, StudentProfile.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
-                        mContext.startActivity(intent);
-                        break;
-
-                }
-
-            }
         }
+// click for each menu item
+@Override
+public void onClick(View v) {
+    if (utilities.getVisibility() == View.VISIBLE) {
+        Intent intent = null;
+        switch (v.getId()) {
+            case R.id.scan:
+                //intent = new Intent(mContext, ScanActivity.class);
+                //todo:scan and send notification to student
+                Toast.makeText(mContext, "Scan", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.rate_student:
+                intent = new Intent(mContext, RateStudent.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
+                mContext.startActivity(intent);
+                break;
+
+            case R.id.profile:
+                intent = new Intent(mContext, StudentProfile.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
+                mContext.startActivity(intent);
+                break;
+
+        }
+
+    }
+}
+
     }
 }

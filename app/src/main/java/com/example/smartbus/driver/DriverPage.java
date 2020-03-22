@@ -15,10 +15,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.smartbus.R;
@@ -37,11 +36,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import com.example.smartbus.SigninActivity;
-import com.example.smartbus.driver.ListAdapter;
 import com.example.smartbus.server.Constants;
-import com.example.smartbus.server.RecyclerViewHttps;
 import com.example.smartbus.server.SharedPrefManager;
-import com.example.smartbus.server.https;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -52,7 +48,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
-    public static ListAdapter listAdapter;
+    public ListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +70,12 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         //connect with xml
         recyclerView = findViewById(R.id.recycler_view);
-
-
-        RecyclerViewHttps https = new RecyclerViewHttps(DriverPage.this, Constants.getStudentUrl, recyclerView, "id_driver");
-        https.execute();
-
+        ArrayList<String> spase = new ArrayList<>();
+        listAdapter = new ListAdapter(DriverPage.this, spase);
         recyclerView.setLayoutManager(new GridLayoutManager(DriverPage.this, 1));
 
-
+        DataParser https = new DataParser(DriverPage.this, Constants.getStudentUrl, recyclerView, spase, listAdapter, "id_driver");
+        https.execute();
     }
 
     @Override
@@ -120,16 +114,21 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
     public static class DataParser extends AsyncTask<Void, Void, Integer> {
         Context c;
-        String jsonData;
+        String url;
         RecyclerView recyclerView;
 
         ProgressDialog progressDialog;
-        ArrayList<String> spase = new ArrayList<>();
+        ArrayList<String> spase;
+        String userid;
+        ListAdapter listAdapter;
 
-        public DataParser(Context c, String jsonData, RecyclerView lv) {
+        public DataParser(Context c, String dataUrl, RecyclerView lv, ArrayList<String> arrayList, ListAdapter l, String user) {
             this.c = c;
-            this.jsonData = jsonData;
+            this.url = dataUrl;
             this.recyclerView = lv;
+            userid = user;
+            listAdapter = l;
+            spase = arrayList;
         }
 
         @Override
@@ -143,7 +142,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            return this.getData();
+            return this.getData(url, userid);
         }
 
         @Override
@@ -153,17 +152,95 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
                 listAdapter = new ListAdapter(c, spase);
                 recyclerView.setAdapter(listAdapter);
+                Log.i("tag", "adapter");
+                recyclerView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(c, "toast", Toast.LENGTH_SHORT).show();
 
+                    }
+                });
             } else {
                 Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
             }
             progressDialog.dismiss();
         }
 
+        private String downloadData(String urlAddres, String userID) {
+            InputStream is = null;
+            String line = null;
+
+
+            try {
+
+                URL url = new URL(urlAddres);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+
+                String userId = SharedPrefManager.getInstance(c).getUsername();
+
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter(userID, userId);
+
+                String query = builder.build().getEncodedQuery();
+                OutputStream os = httpURLConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                httpURLConnection.connect();
+                is = new BufferedInputStream(httpURLConnection.getInputStream());
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+
+
+                StringBuilder stringBuilder = new StringBuilder();
+                if (stringBuilder != null) {
+
+
+                    while ((line = bufferedReader.readLine()) != null) {
+
+                        stringBuilder.append(line + "\n");
+
+                    }
+                } else {
+                    return null;
+                }
+
+                return stringBuilder.toString().trim();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+            return null;
+        }
 
         //-- reading json code-----
-        private int getData() {
-
+        private int getData(String urlAddres, String userID) {
+            String jsonData = downloadData(urlAddres, userID);
             try {
 
                 JSONArray ja = new JSONArray(jsonData);

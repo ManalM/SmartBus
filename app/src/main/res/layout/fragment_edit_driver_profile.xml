@@ -28,7 +28,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/lightGreen"
-            android:text="NAME"
+            android:hint="NAME"
             android:textColor="#8B887B" />
 
         <EditText
@@ -39,7 +39,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/lightGreen"
-            android:text="Phone Number"
+            android:hint="Phone Number"
             android:inputType="number"
             android:textColor="#8B887B" />
 
@@ -51,7 +51,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/lightGreen"
-            android:text="Email"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:textColor="#8B887B" />
 

@@ -99,7 +99,7 @@ public class SigninActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), StudentList.class));
                             finish();
                         } else {
-                            startActivity(new Intent(getApplicationContext(), StudentList.class));
+                            startActivity(new Intent(getApplicationContext(), DriverPage.class));
                             finish();
                         }
                     }else{
