@@ -47,6 +47,7 @@ public class RateStudent extends AppCompatActivity {
         });
     }
 
+    //todo:cancel
     private void updateDB() {
         https https = new https(RateStudent.this, Constants.driverRateUrl, "mohammed", rateTag);
         https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());

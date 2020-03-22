@@ -6,6 +6,9 @@ public class Constants {
     // public static final String url = "https://www.ali0.sa/bus/android_files/";
     private static final String url = "http://192.168.43.126/";
     public static final String loginUrl = url + "login.php";
+    public static final String User = "user";
+    public static final String Driver = "driver";
+
     //---Driver----------
     public static final String infoDriverTag = "diverInfo";
     public static final String getStudentUrl = url + "getStudent.php";

@@ -19,12 +19,15 @@ import com.example.smartbus.driver.ListAdapter;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.RecyclerViewHttps;
 import com.example.smartbus.server.https;
+import com.onesignal.OneSignal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.example.smartbus.server.Constants.User;
 
 public class StudentList extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -34,6 +37,11 @@ public class StudentList extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.student_list);
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
+        OneSignal.sendTag("User_ID", User);
         //---------------------recyclerView-----------------------
         recyclerView = findViewById(R.id.recycler_view_student);
 

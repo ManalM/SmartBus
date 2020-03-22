@@ -3,6 +3,9 @@
     package="com.example.smartbus">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -10,27 +13,61 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".driver.Scan"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD1IuCG-ecYL2jqSOMaQXndsKQhl_W049o" />
-        <activity android:name=".SigninActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".student.RateDriver" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
-        <activity android:name=".student.DriverFeedback" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
-        <activity android:name=".student.StudentPayment" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
-        <activity android:name=".student.EditStudentProfile" android:parentActivityName=".student.StudentPage" android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity
+            android:name=".SigninActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.RateDriver"
+            android:parentActivityName=".student.StudentPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.DriverFeedback"
+            android:parentActivityName=".student.StudentPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.StudentPayment"
+            android:parentActivityName=".student.StudentPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".student.EditStudentProfile"
+            android:parentActivityName=".student.StudentPage"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".student.StudentPage"
-            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait" />
-        <activity android:name=".driver.StudentProfile" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
-        <activity android:name=".driver.RateStudent" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
-        <activity android:name=".driver.EditDriverProfile" android:parentActivityName=".driver.DriverPage" android:screenOrientation="portrait"/>
-        <activity android:name=".student.StudentList"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".driver.StudentProfile"
+            android:parentActivityName=".driver.DriverPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".driver.RateStudent"
+            android:parentActivityName=".driver.DriverPage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".driver.EditDriverProfile"
+            android:parentActivityName=".driver.DriverPage"
+            android:screenOrientation="portrait" />
+        <activity android:name=".student.StudentList" />
         <activity
             android:name=".driver.DriverPage"
-            android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar" android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

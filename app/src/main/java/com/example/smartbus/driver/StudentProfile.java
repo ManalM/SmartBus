@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class StudentProfile extends AppCompatActivity {
 
     ImageView image;
@@ -37,6 +39,7 @@ public class StudentProfile extends AppCompatActivity {
         address = findViewById(R.id.retrieve_student_address);
         getSupportActionBar().setTitle("Student Information");
         Intent intent = getIntent();
+        //todo:implement calling
         String fname = intent.getStringExtra("nameOfStudent");
         new HttpsRetrieve(StudentProfile.this, fname, Constants.getStudentInfoUrl).execute();
     }
@@ -45,6 +48,7 @@ public class StudentProfile extends AppCompatActivity {
         Context c;
         String jsonData;
         ProgressDialog progressDialog;
+        HashMap<String, String> hashMap = new HashMap<>();
 
         public DataParser(Context context, String json) {
             c = context;
@@ -88,15 +92,17 @@ public class StudentProfile extends AppCompatActivity {
                 JSONObject jo = null;
 
                 for (int i = 0; i < ja.length(); i++) {
-
+//todo:error here
                     jo = ja.getJSONObject(i);
 
-                    String name = jo.getString("first_name");
                     String lname = jo.getString("last_name");
                     String phonee = jo.getString("phone");
-                    String healthh = jo.getString("health");
-                    String addresss = jo.getString("adress");
                     String emaill = jo.getString("email");
+                    String name = jo.getString("first_name");
+
+                    String addresss = jo.getString("adress");
+                    String healthh = jo.getString("health");
+
                     Fname.setText(name);
                     Lname.setText(lname);
                     phone.setText(phonee);
