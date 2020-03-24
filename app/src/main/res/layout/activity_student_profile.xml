@@ -119,5 +119,27 @@ android:orientation="vertical"
         android:layout_marginEnd="20dp"
         android:background="@color/lightGreen" />
 
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:textColor="@color/textColor"
+    android:background="@drawable/button"
+    android:text="Call "
+    android:onClick="callStudent"
+    android:drawableLeft="@drawable/call"
+    android:drawablePadding="5dp"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:textColor="@color/textColor"
+        android:background="@drawable/button"
+        android:text="Go to student location "
+        android:drawableLeft="@drawable/location"
+        android:padding="5dp"
+        android:onClick="goToLocation"/>
 </LinearLayout>

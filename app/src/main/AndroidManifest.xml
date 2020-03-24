@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +14,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".driver.StudentLocation" android:parentActivityName=".driver.StudentProfile"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -24,7 +23,7 @@
             android:name="com.google.android.gms.vision.barcode.Barcode"
             android:value="barcode" />
 
-        <activity android:name=".driver.Scan"></activity>
+        <activity android:name=".driver.Scan" />
         <activity
             android:name=".SigninActivity"
             android:screenOrientation="fullSensor" />

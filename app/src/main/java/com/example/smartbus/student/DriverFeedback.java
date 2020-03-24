@@ -35,7 +35,7 @@ public class DriverFeedback extends AppCompatActivity {
         comments.add("Good boy");
         rating = 1;
         recyclerView.setLayoutManager(new GridLayoutManager(DriverFeedback.this, 1));
-//todo:why it is list ???? for one student only
+//todo: to admin
         DriverFeedbackAdapter studentListAdapter = new DriverFeedbackAdapter(DriverFeedback.this, names, comments, rating);
         recyclerView.setAdapter(studentListAdapter);
     }

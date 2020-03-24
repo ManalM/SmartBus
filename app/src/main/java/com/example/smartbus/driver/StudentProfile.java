@@ -2,11 +2,17 @@ package com.example.smartbus.driver;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class StudentProfile extends AppCompatActivity {
 
@@ -39,16 +46,59 @@ public class StudentProfile extends AppCompatActivity {
         address = findViewById(R.id.retrieve_student_address);
         getSupportActionBar().setTitle("Student Information");
         Intent intent = getIntent();
-        //todo:implement calling
         String fname = intent.getStringExtra("nameOfStudent");
         new HttpsRetrieve(StudentProfile.this, fname, Constants.getStudentInfoUrl).execute();
+    }
+
+    public void callStudent(View view) {
+
+        if (!phone.getText().toString().isEmpty()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(StudentProfile.this);
+
+            builder.setTitle("Call student");
+
+            builder.setMessage("Do want to call " + Fname.getText().toString() + "??");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Uri number = Uri.parse("tel:" + phone.getText().toString());
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                    PackageManager packageManager = getPackageManager();
+                    List activities = packageManager.queryIntentActivities(callIntent,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+                    boolean isIntentSafe = ((List) activities).size() > 0;
+
+                    if (isIntentSafe)
+                        try {
+                            startActivity(callIntent);
+                        } catch (ActivityNotFoundException e) {
+                            String message = e.getMessage();
+                            Toast.makeText(StudentProfile.this, "Error:" + message, Toast.LENGTH_LONG).show();
+                        }
+                }
+            });
+            builder.setNegativeButton("No", null);
+            builder.show();
+
+
+        } else {
+            Toast.makeText(StudentProfile.this, "No added number", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    public void goToLocation(View view) {
+        startActivity(new Intent(StudentProfile.this, StudentLocation.class));
     }
 
     public static class DataParser extends AsyncTask<Void, Void, Integer> {
         Context c;
         String jsonData;
         ProgressDialog progressDialog;
-        HashMap<String, String> hashMap = new HashMap<>();
+        String lname,
+                phonee,
+                emaill, name,
+                addresss, healthh;
 
         public DataParser(Context context, String json) {
             c = context;
@@ -73,7 +123,15 @@ public class StudentProfile extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer b) {
             super.onPostExecute(b);
+            phone.setText("055500");
+
             if (b == 1) {
+                Fname.setText(name);
+                Lname.setText(lname);
+                phone.setText(phonee);
+                address.setText(addresss);
+                email.setText(emaill);
+                health.setText(healthh);
                 Toast.makeText(c, "Good", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
@@ -87,29 +145,16 @@ public class StudentProfile extends AppCompatActivity {
 
             try {
 
-                JSONArray ja = new JSONArray(jsonData);
+                JSONObject ja = new JSONObject(jsonData);
 
-                JSONObject jo = null;
+                    lname = ja.getString("last_name");
+                    phonee = ja.getString("phone");
+                    emaill = ja.getString("email");
+                    name = ja.getString("first_name");
 
-                for (int i = 0; i < ja.length(); i++) {
-//todo:error here
-                    jo = ja.getJSONObject(i);
+                    addresss = ja.getString("adress");
+                    healthh = ja.getString("health");
 
-                    String lname = jo.getString("last_name");
-                    String phonee = jo.getString("phone");
-                    String emaill = jo.getString("email");
-                    String name = jo.getString("first_name");
-
-                    String addresss = jo.getString("adress");
-                    String healthh = jo.getString("health");
-
-                    Fname.setText(name);
-                    Lname.setText(lname);
-                    phone.setText(phonee);
-                    address.setText(addresss);
-                    email.setText(emaill);
-                    health.setText(healthh);
-                }
 
                 return 1;
             } catch (JSONException e) {
