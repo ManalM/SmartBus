@@ -20,7 +20,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD1IuCG-ecYL2jqSOMaQXndsKQhl_W049o" />
         <meta-data
-            android:name="com.google.android.gms.vision.barcode.Barcode"
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
         <activity android:name=".driver.Scan" />

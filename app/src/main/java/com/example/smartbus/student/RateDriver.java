@@ -37,6 +37,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.smartbus.server.Constants.rateTag;
 
@@ -48,7 +51,7 @@ public class RateDriver extends AppCompatActivity {
     RatingBar ratingBar;
     TextView name;
     String studentName;
-
+    String timeOfRate;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,11 @@ public class RateDriver extends AppCompatActivity {
         name = findViewById(R.id.rating_name_driver);
         Intent intent = getIntent();
         studentName = intent.getStringExtra("name");
+
+        Date time = Calendar.getInstance().getTime();
+        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yy");
+         timeOfRate = format.format(time);
+//todo:set date format in database
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +81,7 @@ public class RateDriver extends AppCompatActivity {
 
     private void updateDB() {
         https https = new https(RateDriver.this, Constants.driverRateUrl, studentName, rateTag);
-        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
+        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString(),timeOfRate);
 
     }
 

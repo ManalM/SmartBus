@@ -92,11 +92,12 @@ public class Scan extends AppCompatActivity {
                 if (qr.size() != 0) {
 
                     Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                    v.vibrate(100);
-                    if (qr.valueAt(0).displayValue.equals(1))
+
+                    if (qr.valueAt(0).displayValue.equals(1)) {
                         //todo:show dialog
                         sendNotification();
-
+                        v.vibrate(100);
+                    }
                 }
             }
         });

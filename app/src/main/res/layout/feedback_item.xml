@@ -28,6 +28,12 @@
         android:text="Good boy good "
         android:textColor="#8B887B"
         android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal">
+
         <RatingBar
             android:id="@+id/ratingBar2"
             android:layout_width="200dp"
@@ -35,7 +41,7 @@
             android:layout_gravity="right"
             android:layout_height="60dp" />
 
-
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -61,7 +61,7 @@ public class https extends AsyncTask<String, Void, String> {
 
         try {
 
-            String param0, param1, param2;
+            String param0, param1, param2, param3;
 
             URL url = new URL(urlAddres);
 
@@ -87,10 +87,12 @@ public class https extends AsyncTask<String, Void, String> {
                 param1 = strings[1];
 
                 param2 = strings[2];
+                param3 = strings[3];
                 builder.appendQueryParameter("student_name", userID)
                         .appendQueryParameter("comment", param0)
                         .appendQueryParameter("stars", param1)
-                        .appendQueryParameter("driver_name", param2);
+                        .appendQueryParameter("driver_name", param2)
+                        .appendQueryParameter("time", param3);
             } else if (tag.equals(infoDriverTag)) {
                 param0 = strings[0];
                 param1 = strings[1];
@@ -170,7 +172,6 @@ public class https extends AsyncTask<String, Void, String> {
         }
 
     }
-
 
 
 }

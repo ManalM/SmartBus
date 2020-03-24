@@ -92,7 +92,7 @@ public class SigninActivity extends AppCompatActivity {
                                         obj.getString("username"),
                                        null
                                 );
-                        if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("d")) {
+                        if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("")) {
                             startActivity(new Intent(getApplicationContext(), DriverPage.class));
                             finish();
                         } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
