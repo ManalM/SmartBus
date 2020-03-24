@@ -8,17 +8,17 @@
     android:orientation="vertical">
 
 
+    <TextView
+        android:id="@+id/student_name_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="Mohammed"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/student_name_feedback"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:layout_margin="5dp"
-            android:text="Mohammed"
-            android:textColor="#000"
-            android:textStyle="bold" />
     <TextView
         android:id="@+id/student_feedback"
         android:layout_width="match_parent"
@@ -28,18 +28,28 @@
         android:text="Good boy good "
         android:textColor="#8B887B"
         android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20-22-2020" />
+
         <RatingBar
             android:id="@+id/ratingBar2"
             android:layout_width="200dp"
-            android:layout_margin="5dp"
+            android:layout_height="60dp"
             android:layout_gravity="right"
-            android:layout_height="60dp" />
+            android:layout_margin="5dp" />
 
     </LinearLayout>
 

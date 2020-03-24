@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartbus.driver.DriverPage;
+import com.example.smartbus.student.DriverFeedback;
 import com.example.smartbus.student.StudentList;
 
 import java.io.BufferedInputStream;
@@ -64,6 +65,8 @@ public class RecyclerViewHttps extends AsyncTask<Void, Integer, String> {
 /*            DriverPage.DataParser p = new DriverPage.DataParser(c, aVoid, recyclerView);
             p.execute();*/
 
+            DriverFeedback.DataParser p = new DriverFeedback.DataParser(c,aVoid,recyclerView);
+            p.execute();
             StudentList.DataParser s = new StudentList.DataParser(c, aVoid, recyclerView);
             s.execute();
         } else {

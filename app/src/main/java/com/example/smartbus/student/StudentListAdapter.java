@@ -13,8 +13,7 @@ import com.example.smartbus.R;
 import com.example.smartbus.driver.ListAdapter;
 
 import java.util.ArrayList;
-
-public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.viewHolder> {
+class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.viewHolder> {
     private static Context mContext;
     private ArrayList<String> students;
     private StudentListAdapter.OnItemClickListener mListener;
@@ -57,11 +56,11 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         public viewHolder(@NonNull View itemView,final StudentListAdapter.OnItemClickListener listener) {
             super(itemView);
 
-           name = itemView.findViewById(R.id.student_list_name);
+            name = itemView.findViewById(R.id.student_list_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  if (listener != null) {
+                    if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);

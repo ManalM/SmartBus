@@ -26,6 +26,7 @@ import java.net.URL;
 
 import static com.example.smartbus.server.Constants.infoDriverTag;
 import static com.example.smartbus.server.Constants.infoTag;
+import static com.example.smartbus.server.Constants.rateDriverTag;
 import static com.example.smartbus.server.Constants.rateTag;
 
 public class https extends AsyncTask<String, Void, String> {
@@ -87,13 +88,20 @@ public class https extends AsyncTask<String, Void, String> {
                 param1 = strings[1];
 
                 param2 = strings[2];
-                param3 = strings[3];
                 builder.appendQueryParameter("student_name", userID)
                         .appendQueryParameter("comment", param0)
                         .appendQueryParameter("stars", param1)
-                        .appendQueryParameter("driver_name", param2)
-                        .appendQueryParameter("time", param3);
-            } else if (tag.equals(infoDriverTag)) {
+                        .appendQueryParameter("driver_name", param2);
+            } else if (tag.equals(rateDriverTag)) {
+                param0 = strings[0];
+                param1 = strings[1];
+
+                param2 = strings[2];
+                builder.appendQueryParameter("student_name", userID)
+                        .appendQueryParameter("comment", param0)
+                        .appendQueryParameter("stars", param1)
+                        .appendQueryParameter("driver_name", param2);
+            }else if (tag.equals(infoDriverTag)) {
                 param0 = strings[0];
                 param1 = strings[1];
                 String userId = SharedPrefManager.getInstance(c).getUsername();

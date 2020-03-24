@@ -14,7 +14,8 @@ public class Constants {
     public static final String getStudentUrl = url + "getStudent.php";
     public static final String updateDriverProfile = url + "insertDriverData.php";
     public static final String getStudentInfoUrl = url + "getStudentInfo.php";
-
+    public static final String insertStudentRate = url+"insertStudentRate.php";
+    public static final String rateDriverTag = "rateStudent";
     //---Student-----------
     public static final String infoTag = "info";
     public static final String rateTag = "rate";

@@ -13,12 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.smartbus.R;
-import com.example.smartbus.SigninActivity;
-import com.example.smartbus.driver.DriverPage;
-import com.example.smartbus.driver.ListAdapter;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.RecyclerViewHttps;
-import com.example.smartbus.server.https;
 import com.onesignal.OneSignal;
 
 import org.json.JSONArray;

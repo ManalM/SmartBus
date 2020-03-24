@@ -15,6 +15,7 @@ import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.https;
 import com.example.smartbus.student.RateDriver;
 
+import static com.example.smartbus.server.Constants.rateDriverTag;
 import static com.example.smartbus.server.Constants.rateTag;
 
 public class RateStudent extends AppCompatActivity {
@@ -41,15 +42,14 @@ public class RateStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+//todo:test
                 updateDB();
             }
         });
     }
 
-    //todo:cancel
-    private void updateDB() {
-        https https = new https(RateStudent.this, Constants.driverRateUrl, "mohammed", rateTag);
+    private void updateDB() {//todo:get driver name from data base and save in sharedPerefrences
+        https https = new https(RateStudent.this, Constants.driverRateUrl, "mohammed",rateDriverTag);
         https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
 
     }

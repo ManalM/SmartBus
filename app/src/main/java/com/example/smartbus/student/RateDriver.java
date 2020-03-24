@@ -63,11 +63,7 @@ public class RateDriver extends AppCompatActivity {
         name = findViewById(R.id.rating_name_driver);
         Intent intent = getIntent();
         studentName = intent.getStringExtra("name");
-
-        Date time = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yy");
-         timeOfRate = format.format(time);
-//todo:set date format in database
+//todo:test
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +77,7 @@ public class RateDriver extends AppCompatActivity {
 
     private void updateDB() {
         https https = new https(RateDriver.this, Constants.driverRateUrl, studentName, rateTag);
-        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString(),timeOfRate);
+        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
 
     }
 
