@@ -36,27 +36,20 @@ import java.util.ArrayList;
 
 public class DriverFeedback extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private int rating;
-    public DriverFeedbackAdapter adapter;
 String studentName;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //---------------------recyclerView-----------------------
-//todo:test
         setContentView(R.layout.fragment_driver_feedback);
         recyclerView = findViewById(R.id.diver_feedback);
 
         Intent intent = getIntent();
         studentName = intent.getStringExtra("name");
         //----------------------------------
-        String[] dataArray = new String[4];
-       // adapter = new DriverFeedbackAdapter(DriverFeedback.this, dataArray);
         recyclerView.setLayoutManager(new GridLayoutManager(DriverFeedback.this, 1));
         //----------------------------------
 
-/*        DataParser dataParser = new DataParser(DriverFeedback.this, Constants.feedbackURL, recyclerView, adapter, "student_name",studentName);
-        dataParser.execute();*/
         DataParser dataParser = new DataParser(DriverFeedback.this, Constants.feedbackURL, recyclerView, "student_name",studentName);
         dataParser.execute();
     }

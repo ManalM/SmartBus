@@ -117,11 +117,8 @@ public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.scan:
-                //intent = new Intent(mContext, ScanActivity.class);
-                //todo:scan and send notification to student
                 intent = new Intent(mContext, Scan.class).putExtra("nameOfStudent", students.get(getAdapterPosition()));
                 mContext.startActivity(intent);
-                Toast.makeText(mContext, "Scan", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.rate_student:
