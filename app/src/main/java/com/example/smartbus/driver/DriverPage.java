@@ -152,7 +152,6 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
                 listAdapter = new ListAdapter(c, spase);
                 recyclerView.setAdapter(listAdapter);
-                Log.i("tag", "adapter");
                 recyclerView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

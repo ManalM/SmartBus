@@ -51,7 +51,6 @@ public class RateDriver extends AppCompatActivity {
     RatingBar ratingBar;
     TextView name;
     String studentName;
-    String timeOfRate;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,6 @@ public class RateDriver extends AppCompatActivity {
         name = findViewById(R.id.rating_name_driver);
         Intent intent = getIntent();
         studentName = intent.getStringExtra("name");
-//todo:test
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

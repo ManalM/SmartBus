@@ -19,7 +19,7 @@ public class Constants {
     //---Student-----------
     public static final String infoTag = "info";
     public static final String rateTag = "rate";
-
+    public static final String feedbackURL = url+"getFeedback.php";
     public static final String getChildrenUrl = url + "getChildren.php";
     public static final String updateStudentProfile = url + "insertStudentData.php";
     public static final String driverRateUrl = url + "insertDriverRate.php";

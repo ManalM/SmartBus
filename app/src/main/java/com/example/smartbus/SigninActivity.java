@@ -91,11 +91,11 @@ public class SigninActivity extends AppCompatActivity {
                                         obj.getInt("id"),
                                         obj.getString("username"),
                                        null
-                                );
-                        if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("")) {
+                                );//todo:edit
+                        if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("d")) {
                             startActivity(new Intent(getApplicationContext(), DriverPage.class));
                             finish();
-                        } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
+                        } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().equals("4040")) {
                             startActivity(new Intent(getApplicationContext(), StudentList.class));
                             finish();
                         } else {

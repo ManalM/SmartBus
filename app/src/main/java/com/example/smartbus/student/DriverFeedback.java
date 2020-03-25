@@ -3,6 +3,7 @@ package com.example.smartbus.student;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,20 +16,29 @@ import android.widget.Toast;
 
 import com.example.smartbus.R;
 import com.example.smartbus.server.Constants;
-import com.example.smartbus.server.RecyclerViewHttps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class DriverFeedback extends AppCompatActivity {
     private RecyclerView recyclerView;
     private int rating;
-   public static DriverFeedbackAdapter adapter;
-
+    public DriverFeedbackAdapter adapter;
+String studentName;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,29 +46,43 @@ public class DriverFeedback extends AppCompatActivity {
 //todo:test
         setContentView(R.layout.fragment_driver_feedback);
         recyclerView = findViewById(R.id.diver_feedback);
-/*        ArrayList<String> names  = new ArrayList<>();
-        ArrayList<String> comments  = new ArrayList<>();
 
-        names.add("ahmed");
-        comments.add("Good boy");
-        rating = 1;*/
+        Intent intent = getIntent();
+        studentName = intent.getStringExtra("name");
+        //----------------------------------
+        String[] dataArray = new String[4];
+       // adapter = new DriverFeedbackAdapter(DriverFeedback.this, dataArray);
         recyclerView.setLayoutManager(new GridLayoutManager(DriverFeedback.this, 1));
-        RecyclerViewHttps https =  new RecyclerViewHttps(DriverFeedback.this, Constants.insertStudentRate,recyclerView,"student_name");
-        https.execute();
+        //----------------------------------
+
+/*        DataParser dataParser = new DataParser(DriverFeedback.this, Constants.feedbackURL, recyclerView, adapter, "student_name",studentName);
+        dataParser.execute();*/
+        DataParser dataParser = new DataParser(DriverFeedback.this, Constants.feedbackURL, recyclerView, "student_name",studentName);
+        dataParser.execute();
     }
+
     public static class DataParser extends AsyncTask<Void, Void, Integer> {
         Context c;
-        String jsonData;
+        String url,name;
         RecyclerView recyclerView;
+        DriverFeedbackAdapter adapter;
 
         ProgressDialog progressDialog;
-        ArrayList<String> spase = new ArrayList<>();
-        String[] array = new String[4];
-        public DataParser(Context c, String jsonData, RecyclerView lv) {
+        ArrayList<String> comments,star,names,date;
+        String userid;
+        DataParser(Context c, String dataUrl, RecyclerView lv, String user, String userName) {
             this.c = c;
-            this.jsonData = jsonData;
+            this.url = dataUrl;
             this.recyclerView = lv;
+            userid = user;
+            name = userName;
+            //------------------------
+            comments = new ArrayList<>();
+            star= new ArrayList<>();
+            names = new ArrayList<>();
+            date = new ArrayList<>();
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -71,7 +95,7 @@ public class DriverFeedback extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            return this.getData();
+            return this.getData(url, userid);
         }
 
         @Override
@@ -79,9 +103,8 @@ public class DriverFeedback extends AppCompatActivity {
             super.onPostExecute(b);
             if (b == 1) {
 
-                adapter= new DriverFeedbackAdapter(c, array);
+                adapter = new DriverFeedbackAdapter(c, comments,names,star,date);
                 recyclerView.setAdapter(adapter);
-//here adapter
 
             } else {
                 Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
@@ -89,30 +112,95 @@ public class DriverFeedback extends AppCompatActivity {
             progressDialog.dismiss();
         }
 
-        private int getData() {
+        private String downloadData(String urlAddres, String userID) {
+            InputStream is = null;
+            String line = null;
 
+
+            try {
+
+                URL url = new URL(urlAddres);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+
+                String studentName = name;
+
+
+                Uri.Builder builder = new Uri.Builder()
+                        .appendQueryParameter(userID, studentName);
+
+                String query = builder.build().getEncodedQuery();
+                OutputStream os = httpURLConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+                httpURLConnection.connect();
+                is = new BufferedInputStream(httpURLConnection.getInputStream());
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+
+
+                StringBuilder stringBuilder = new StringBuilder();
+                if (stringBuilder != null) {
+
+
+                    while ((line = bufferedReader.readLine()) != null) {
+
+                        stringBuilder.append(line + "\n");
+
+                    }
+                } else {
+                    return null;
+                }
+
+                return stringBuilder.toString().trim();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+            return null;
+        }
+
+        private int getData(String urlAddres, String userID) {
+            String jsonData = downloadData(urlAddres, userID);
             try {
 
                 JSONArray ja = new JSONArray(jsonData);
 
                 JSONObject jo = null;
 
-                spase.clear();
                 for (int i = 0; i < ja.length(); i++) {
 
                     jo = ja.getJSONObject(i);
 
-                    String name = jo.getString("student_name");
-                    String stars = jo.getString("stars");
-                    String comment = jo.getString("comment");
-                    String date = jo.getString("time");
-                    SimpleDateFormat format = new SimpleDateFormat();
-                    String formattedDate =format.format(date);
-                   // spase.add(name);
-                    array[0] = name ;
-                    array[1] = stars;
-                    array[2] = comment;
-                    array[3] = formattedDate;
+
+                    names.add(jo.getString("driver_name"));
+                    star.add( jo.getString("stars"));
+                    comments.add(jo.getString("comment"));
+                    date.add(jo.getString("time"));
                 }
 
                 return 1;
@@ -125,4 +213,4 @@ public class DriverFeedback extends AppCompatActivity {
         }
     }
 
-        }
+}

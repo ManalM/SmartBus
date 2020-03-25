@@ -96,7 +96,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.nav_feedback:
 
-                startActivity(new Intent(StudentPage.this, DriverFeedback.class));
+                startActivity(new Intent(StudentPage.this, DriverFeedback.class).putExtra("name",nameOfStudent));
 
                 break;
             case R.id.nav_rate_driver:

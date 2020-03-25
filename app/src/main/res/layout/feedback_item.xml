@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:layout_margin="20dp"
+    android:layout_margin="15dp"
     android:background="@drawable/card_view"
     android:orientation="vertical">
 
@@ -45,6 +45,7 @@
             android:text="20-22-2020" />
 
         <RatingBar
+
             android:id="@+id/ratingBar2"
             android:layout_width="200dp"
             android:layout_height="60dp"

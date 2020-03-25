@@ -16,23 +16,17 @@ import java.util.ArrayList;
 
 public class DriverFeedbackAdapter extends RecyclerView.Adapter<DriverFeedbackAdapter.viewHolder> {
     private static Context mContext;
-    private ArrayList<String> studentsName;
-    private ArrayList<String> driverComment;
-    private int rating;
+    ArrayList<String> comments , names, stars, dates;
 
-    private String[] data;
-/*    public DriverFeedbackAdapter(Context mContext, ArrayList<String> studentsName, ArrayList<String> driverComment, int rating) {
+public  DriverFeedbackAdapter (Context context , ArrayList<String> c,ArrayList<String>  n,ArrayList<String> s,ArrayList<String> d){
+    mContext =context;
+    comments =c;
+    names=n;
+    stars=s;
+    dates=d;
+}
 
-        this.mContext = mContext;
-        this.studentsName = studentsName;
-        this.driverComment = driverComment;
-        this.rating = rating;
-    }*/
 
-   public DriverFeedbackAdapter(Context c , String[] data){
-    mContext =c;
-    this.data =data;
-    }
     @NonNull
     @Override
     public DriverFeedbackAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,35 +38,32 @@ public class DriverFeedbackAdapter extends RecyclerView.Adapter<DriverFeedbackAd
 
     @Override
     public void onBindViewHolder(@NonNull DriverFeedbackAdapter.viewHolder holder, int position) {
-/*        holder.comment.setText(driverComment.get(position));
-        holder.name.setText(studentsName.get(position));
-        holder.ratingBar.setRating(rating);*/
-        holder.name.setText(data[0]);
-        holder.ratingBar.setRating(Integer.valueOf(data[1]));
-        holder.comment.setText(data[2]);
-        holder.time.setText(data[3]);
+
+        holder.name.setText(names.get(position));
+        holder.ratingBar.setRating(Integer.valueOf(stars.get(position)));
+        holder.comment.setText(comments.get(position));
+        holder.time.setText(dates.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return /*studentsName.size();*/
-        data.length;
 
+return names.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class viewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,comment,time;
+        TextView name, comment, time;
         RatingBar ratingBar;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
 
-           name = itemView.findViewById(R.id.student_name_feedback);
-           comment = itemView.findViewById(R.id.student_feedback);
+            name = itemView.findViewById(R.id.student_name_feedback);
+            comment = itemView.findViewById(R.id.student_feedback);
             ratingBar = itemView.findViewById(R.id.ratingBar2);
-time= itemView.findViewById(R.id.date);
+            time = itemView.findViewById(R.id.date);
         }
     }
 }

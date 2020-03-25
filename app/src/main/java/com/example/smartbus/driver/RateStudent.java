@@ -42,15 +42,14 @@ public class RateStudent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//todo:test
                 updateDB();
             }
         });
     }
 
     private void updateDB() {//todo:get driver name from data base and save in sharedPerefrences
-        https https = new https(RateStudent.this, Constants.driverRateUrl, "mohammed",rateDriverTag);
-        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
+        https https = new https(RateStudent.this, Constants.insertStudentRate, name.getText().toString(),rateDriverTag);
+        https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), "mohammed");
 
     }
 }
