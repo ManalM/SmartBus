@@ -25,6 +25,11 @@
     <item android:title=" ">
 
 <menu>
+    <item
+
+        android:id="@+id/nav_list_student"
+        android:icon="@drawable/child"
+        android:title="My children" />
             <item
                 
                 android:id="@+id/nav_logout_student"

@@ -1,6 +1,7 @@
 package com.example.smartbus.driver;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -42,7 +43,8 @@ public class EditDriverProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateDB();
-
+                MediaPlayer m = MediaPlayer.create(EditDriverProfile.this, R.raw.correct);
+                m.start();
             }
         });
     }

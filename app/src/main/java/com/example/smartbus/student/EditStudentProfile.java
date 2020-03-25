@@ -1,6 +1,7 @@
 package com.example.smartbus.student;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.smartbus.R;
+import com.example.smartbus.driver.Scan;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.https;
 
@@ -42,6 +44,7 @@ public class EditStudentProfile extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
 
         updateDB();
-
+        MediaPlayer m = MediaPlayer.create(EditStudentProfile.this, R.raw.correct);
+        m.start();
     }
 }

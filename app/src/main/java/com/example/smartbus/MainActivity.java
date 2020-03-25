@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//todo:try to do anim from tight to  left
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

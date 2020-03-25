@@ -1,12 +1,15 @@
 package com.example.smartbus.driver;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -14,6 +17,11 @@ import android.os.Vibrator;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.smartbus.R;
 import com.google.android.gms.vision.CameraSource;
@@ -37,7 +45,7 @@ public class Scan extends AppCompatActivity {
     SurfaceView surfaceView;
     CameraSource cameraSource;
     BarcodeDetector barcodeDetector;
-
+ImageView correct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +57,10 @@ public class Scan extends AppCompatActivity {
                 .init();
 
         OneSignal.sendTag("User_ID", Driver);
+        //----------------------------------------
         surfaceView = findViewById(R.id.surfaceView);
+        correct= findViewById(R.id.image);
+        //-----------------barcode------------------
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
 
@@ -92,12 +103,27 @@ public class Scan extends AppCompatActivity {
                 if (qr.size() != 0) {
 
                     Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-
-                    if (qr.valueAt(0).displayValue.equals(1)) {
-                        //todo:show dialog
-                        sendNotification();
+                    MediaPlayer m = MediaPlayer.create(Scan.this, R.raw.correct);
+                    if (!qr.valueAt(0).displayValue.isEmpty()) {
                         v.vibrate(100);
-                    }
+                        //todo:show dialog and try the library of scanning
+                        // todo:problem of sending many notification
+                        m.start();
+                        sendNotification();
+                        startActivity(new Intent(Scan.this,DriverPage.class));
+     /*                   AlertDialog builder = new AlertDialog.Builder(Scan.this).create();
+                        builder.setButton(AlertDialog.BUTTON_NEUTRAL,"send notification !", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                sendNotification();
+                                startActivity(new Intent(Scan.this,DriverPage.class));
+
+                            }
+                        });
+
+                        builder.setIcon(R.drawable.correct);
+                        builder.show();*/
+                   }
                 }
             }
         });
@@ -128,16 +154,16 @@ public class Scan extends AppCompatActivity {
                         con.setDoInput(true);
 
                         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                        con.setRequestProperty("Authorization", "Basic Mjk1MjhkZmQtMjY3YS00ZTY2LTkxYTMtNDU3NDdjNzk5OTI5");
+                        con.setRequestProperty("Authorization", "Basic MmMyNmZmZjEtNzc5Ni00MzMzLWIwZWQtN2MzZWQ4ZDU0NThl");
                         con.setRequestMethod("POST");
 
                         String strJsonBody = "{"
-                                + "\"app_id\": \"bd9bb495-89b5-497f-ae50-d6a6d99c1aff\","
+                                + "\"app_id\": \"8e93143b-2c2c-47e6-a1a8-0cfd3956a62a\","
 
                                 + "\"filters\": [{\"field\": \"tag\", \"key\": \"User_ID\", \"relation\": \"=\", \"value\": \"" + sendTo + "\"}],"
 
                                 + "\"data\": {\"foo\": \"bar\"},"
-                                + "\"contents\": {\"en\": \"Your kid" + name + ", in his way, track him !!\"}"
+                                + "\"contents\": {\"en\": \"Your kid " + name + ", in his way, track him !!\"}"
                                 + "}";
 
 
@@ -168,6 +194,27 @@ public class Scan extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 }
+            }
+        });
+    }
+    private void animateHeart() {
+        Animation likeAnim = AnimationUtils.loadAnimation(Scan.this, R.anim.animation);
+        correct.setVisibility(View.VISIBLE);
+        correct.startAnimation(likeAnim);
+        likeAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                correct.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
             }
         });
     }

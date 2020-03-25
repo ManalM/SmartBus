@@ -105,6 +105,9 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
             case R.id.nav_logout_student:
                 startActivity(new Intent(StudentPage.this, SigninActivity.class));
                 break;
+            case R.id.nav_list_student:
+                startActivity(new Intent(StudentPage.this, StudentList.class));
+                break;
 
         }
         drawer.closeDrawer(GravityCompat.START);
