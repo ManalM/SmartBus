@@ -91,16 +91,17 @@ public class SigninActivity extends AppCompatActivity {
                                         obj.getInt("id"),
                                         obj.getString("username"),
                                        null
-                                );//todo:edit
+                                );
                         if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("d")) {
                             startActivity(new Intent(getApplicationContext(), DriverPage.class));
                             finish();
-                        } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().equals("4040")) {
+                        } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
                             startActivity(new Intent(getApplicationContext(), StudentList.class));
                             finish();
                         } else {
-                            startActivity(new Intent(getApplicationContext(), DriverPage.class));
-                            finish();
+                            Toast.makeText(SigninActivity.this, "Error in username", Toast.LENGTH_SHORT).show();
+                       /*     startActivity(new Intent(getApplicationContext(), DriverPage.class));
+                            finish();*/
                         }
                     }else{
                         Toast.makeText(

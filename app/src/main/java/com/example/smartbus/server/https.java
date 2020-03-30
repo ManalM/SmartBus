@@ -79,7 +79,9 @@ public class https extends AsyncTask<String, Void, String> {
 
                 param2 = strings[2];
                 String userId = SharedPrefManager.getInstance(c).getUsername();
-                builder.appendQueryParameter(userID, userId)
+                //todo:edit
+                String userName = userId.substring(1);
+                builder.appendQueryParameter(userID, userName)
                         .appendQueryParameter("health", param0)
                         .appendQueryParameter("phone", param1)
                         .appendQueryParameter("first_name", param2);

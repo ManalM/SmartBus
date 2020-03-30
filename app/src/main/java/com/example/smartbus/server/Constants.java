@@ -3,8 +3,8 @@ package com.example.smartbus.server;
 public class Constants {
 
     //--------general------
-    // public static final String url = "https://www.ali0.sa/bus/android_files/";
-    private static final String url = "http://192.168.43.126/";
+    public static final String url = "https://www.ali0.sa/bus/android_files/";
+   // private static final String url = "http://192.168.43.126/";
     public static final String loginUrl = url + "login.php";
     public static final String User = "user";
     public static final String Driver = "driver";
