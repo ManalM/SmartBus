@@ -41,13 +41,12 @@ public class StudentProfile extends AppCompatActivity {
         Fname = findViewById(R.id.retrieve_student_first_name);
         Lname = findViewById(R.id.retrieve_student_last_name);
         phone = findViewById(R.id.retrieve_student_phone);
-        email = findViewById(R.id.retrieve_student_email);
         health = findViewById(R.id.retrieve_student_health);
         address = findViewById(R.id.retrieve_student_address);
         getSupportActionBar().setTitle("Student Information");
         Intent intent = getIntent();
         String fname = intent.getStringExtra("nameOfStudent");
-        new HttpsRetrieve(StudentProfile.this, fname, Constants.getStudentInfoUrl).execute();
+        new HttpsRetrieve(StudentProfile.this, fname, Constants.getStudentInfoUrl,Constants.profileTag).execute();
     }
 
     public void callStudent(View view) {
@@ -97,7 +96,7 @@ public class StudentProfile extends AppCompatActivity {
         ProgressDialog progressDialog;
         String lname,
                 phonee,
-                emaill, name,
+               name,
                 addresss, healthh;
 
         public DataParser(Context context, String json) {
@@ -123,14 +122,12 @@ public class StudentProfile extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer b) {
             super.onPostExecute(b);
-            phone.setText("055500");
 
             if (b == 1) {
                 Fname.setText(name);
                 Lname.setText(lname);
                 phone.setText(phonee);
                 address.setText(addresss);
-                email.setText(emaill);
                 health.setText(healthh);
                 Toast.makeText(c, "Good", Toast.LENGTH_SHORT).show();
             } else {
@@ -149,7 +146,6 @@ public class StudentProfile extends AppCompatActivity {
 
                     lname = ja.getString("last_name");
                     phonee = ja.getString("phone");
-                    emaill = ja.getString("email");
                     name = ja.getString("first_name");
 
                     addresss = ja.getString("adress");

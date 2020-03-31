@@ -1,5 +1,6 @@
 package com.example.smartbus.student;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,10 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartbus.R;
+import com.example.smartbus.driver.StudentProfile;
 import com.example.smartbus.server.Constants;
+import com.example.smartbus.server.HttpsRetrieve;
 import com.example.smartbus.server.SharedPrefManager;
 import com.example.smartbus.server.https;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
@@ -49,8 +55,9 @@ public class RateDriver extends AppCompatActivity {
     Button save;
     EditText comment;
     RatingBar ratingBar;
-    TextView name;
+    public static TextView name;
     String studentName;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +69,7 @@ public class RateDriver extends AppCompatActivity {
         name = findViewById(R.id.rating_name_driver);
         Intent intent = getIntent();
         studentName = intent.getStringExtra("name");
+        new HttpsRetrieve(RateDriver.this, studentName, Constants.getDriverName, Constants.nameTag).execute();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +86,63 @@ public class RateDriver extends AppCompatActivity {
         https.execute(comment.getText().toString(), String.valueOf(ratingBar.getRating()), name.getText().toString());
 
     }
+
+    public static class DataParser extends AsyncTask<Void, Void, Integer> {
+        Context c;
+        String jsonData;
+        String driverName;
+
+        public DataParser(Context context, String json) {
+            c = context;
+            jsonData = json;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return this.getData();
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer b) {
+            super.onPostExecute(b);
+
+            if (b == 1) {
+                name.setText(driverName.substring(1));
+
+                Toast.makeText(c, "Good", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(c, "not good", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        //-- reading json code-----
+        private int getData() {
+
+            try {
+
+                JSONObject ja = new JSONObject(jsonData);
+
+                driverName = ja.getString("name");
+
+             //   driverName = jsonData;
+                return 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            return 0;
+        }
+    }
+
 
 }
 

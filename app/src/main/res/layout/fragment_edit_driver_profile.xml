@@ -20,16 +20,6 @@
             android:layout_marginBottom="30dp"
             app:srcCompat="@drawable/logo" />
 
-        <EditText
-            android:id="@+id/driver_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="@color/lightGreen"
-            android:hint="NAME"
-            android:textColor="#8B887B" />
 
         <EditText
             android:id="@+id/driver_phone"

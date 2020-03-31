@@ -45,6 +45,10 @@
             android:text="20-22-2020" />
 
         <RatingBar
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:isIndicator="true"
 
             android:id="@+id/ratingBar2"
             android:layout_width="200dp"

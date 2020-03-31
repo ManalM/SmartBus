@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.smartbus.driver.DriverPage;
 import com.example.smartbus.driver.StudentProfile;
+import com.example.smartbus.student.RateDriver;
 import com.example.smartbus.student.StudentList;
 
 import java.io.BufferedInputStream;
@@ -29,14 +30,14 @@ public class HttpsRetrieve extends AsyncTask<Void, Integer, String> {
     String urlAddres;
     ProgressDialog progressDialog;
 
-    String userID;
+    String userID,tag;
 
-    public HttpsRetrieve(Context context, String userid, String url) {
+    public HttpsRetrieve(Context context, String userid, String url,String tag) {
 
         c = context;
         this.userID = userid;
         urlAddres = url;
-
+        this.tag =tag;
     }
 
     @Override
@@ -60,7 +61,9 @@ public class HttpsRetrieve extends AsyncTask<Void, Integer, String> {
         progressDialog.dismiss();
         if (aVoid != null) {
             StudentProfile.DataParser p = new StudentProfile.DataParser(c, aVoid);
+            RateDriver.DataParser d = new RateDriver.DataParser(c,aVoid);
             p.execute();
+            d.execute();
 
         } else {
             Toast.makeText(c, aVoid, Toast.LENGTH_LONG).show();
@@ -84,18 +87,21 @@ public class HttpsRetrieve extends AsyncTask<Void, Integer, String> {
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
 
-            //  String userId = SharedPrefManager.getInstance(c).getUsername();
+            Uri.Builder builder = new Uri.Builder();
+            if (tag.equals(Constants.profileTag)) {
 
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("first_name", userID);
-
+                        builder.appendQueryParameter("first_name", userID);
+            }else if (tag.equals(Constants.nameTag)) {
+                        builder.appendQueryParameter("child_name", userID);
+            }
             String query = builder.build().getEncodedQuery();
+
             OutputStream os = httpURLConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));
 
             writer.write(query);
+
             writer.flush();
             writer.close();
             os.close();

@@ -72,44 +72,52 @@ public class https extends AsyncTask<String, Void, String> {
             httpURLConnection.setDoOutput(true);
 
             Uri.Builder builder = new Uri.Builder();
-            if (tag.equals(infoTag)) {
-                // sending data
-                param0 = strings[0];
-                param1 = strings[1];
+            switch (tag) {
+                case infoTag: {
+                    // sending data
+                    param0 = strings[0];
+                    param1 = strings[1];
 
-                param2 = strings[2];
-                String userId = SharedPrefManager.getInstance(c).getUsername();
-                //todo:edit
-                String userName = userId.substring(1);
-                builder.appendQueryParameter(userID, userName)
-                        .appendQueryParameter("health", param0)
-                        .appendQueryParameter("phone", param1)
-                        .appendQueryParameter("first_name", param2);
-            } else if (tag.equals(rateTag)) {
-                param0 = strings[0];
-                param1 = strings[1];
+                    param2 = strings[2];
+                    String userId = SharedPrefManager.getInstance(c).getUsername();
 
-                param2 = strings[2];
-                builder.appendQueryParameter("student_name", userID)
-                        .appendQueryParameter("comment", param0)
-                        .appendQueryParameter("stars", param1)
-                        .appendQueryParameter("driver_name", param2);
-            } else if (tag.equals(rateDriverTag)) {
-                param0 = strings[0];
-                param1 = strings[1];
+                    builder.appendQueryParameter(userID, userId)
+                            .appendQueryParameter("health", param0)
+                            .appendQueryParameter("phone", param1)
+                            .appendQueryParameter("first_name", param2);
+                    break;
+                }
+                case rateTag: {
+                    param0 = strings[0];
+                    param1 = strings[1];
 
-                param2 = strings[2];
-                builder.appendQueryParameter("student_name", userID)
-                        .appendQueryParameter("comment", param0)
-                        .appendQueryParameter("stars", param1)
-                        .appendQueryParameter("driver_name", param2);
-            }else if (tag.equals(infoDriverTag)) {
-                param0 = strings[0];
-                param1 = strings[1];
-                String userId = SharedPrefManager.getInstance(c).getUsername();
-                builder.appendQueryParameter(userID, userId)
-                        .appendQueryParameter("phone", param1)
-                        .appendQueryParameter("email", param0);
+                    param2 = strings[2];
+                    builder.appendQueryParameter("student_name", userID)
+                            .appendQueryParameter("comment", param0)
+                            .appendQueryParameter("stars", param1)
+                            .appendQueryParameter("driver_name", param2);
+                    break;
+                }
+                case rateDriverTag: {
+                    param0 = strings[0];
+                    param1 = strings[1];
+
+                    param2 = strings[2];
+                    builder.appendQueryParameter("student_name", userID)
+                            .appendQueryParameter("comment", param0)
+                            .appendQueryParameter("stars", param1)
+                            .appendQueryParameter("driver_name", param2);
+                    break;
+                }
+                case infoDriverTag: {
+                    param0 = strings[0];
+                    param1 = strings[1];
+                    param2 = strings[2];
+                    builder.appendQueryParameter(userID, param2)
+                            .appendQueryParameter("phone", param0)
+                            .appendQueryParameter("email", param1);
+                    break;
+                }
             }
 
             String query = builder.build().getEncodedQuery();

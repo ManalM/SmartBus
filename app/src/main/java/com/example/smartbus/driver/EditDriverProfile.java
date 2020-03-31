@@ -27,18 +27,18 @@ import static com.example.smartbus.server.Constants.infoDriverTag;
 
 public class EditDriverProfile extends AppCompatActivity {
 
-    private EditText name, phone,email;
+    private EditText phone,email;
     Button save;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_driver_profile);
-        //   name = findViewById(R.id.driver_name);
         phone = findViewById(R.id.driver_phone);
 
         email = findViewById(R.id.driver_email);
         save = findViewById(R.id.save_driver_info);
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,8 +50,9 @@ public class EditDriverProfile extends AppCompatActivity {
     }
 
     private void updateDB() {
+        String nameOfDriver = getIntent().getStringExtra("name");
         https https = new https(EditDriverProfile.this, Constants.updateDriverProfile, "id_driver", infoDriverTag);
-        https.execute(phone.getText().toString(), email.getText().toString());
+        https.execute(phone.getText().toString(), email.getText().toString(),nameOfDriver);
     }
 
 

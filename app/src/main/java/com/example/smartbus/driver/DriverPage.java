@@ -94,8 +94,8 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         switch (menuItem.getItemId()) {
             case R.id.nav_profile_Driver:
-                startActivity(new Intent(DriverPage.this, EditDriverProfile.class).putExtra("name", "mohammed"));
-                //todo:put name of driver from database instead
+                startActivity(new Intent(DriverPage.this, EditDriverProfile.class).putExtra("name", SharedPrefManager.getInstance(this).getUsername()));
+
                 break;
 
             case R.id.nav_logout_driver:
