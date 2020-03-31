@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.smartbus.R;
 import com.example.smartbus.SigninActivity;
+import com.example.smartbus.server.SharedPrefManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -58,6 +61,9 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.navigation_view_student);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_name);
+        navUsername.setText(nameOfStudent);
         navigationView.setNavigationItemSelectedListener(this);
         // -------------------mapView-----------------
         Bundle mapViewBundle = null;

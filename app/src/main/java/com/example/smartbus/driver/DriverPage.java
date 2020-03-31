@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartbus.R;
@@ -65,6 +66,9 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.navigation_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nav_name);
+        navUsername.setText(SharedPrefManager.getInstance(this).getUsername().substring(1));
         navigationView.setNavigationItemSelectedListener(this);
         //---------------------recyclerView-----------------------
 
