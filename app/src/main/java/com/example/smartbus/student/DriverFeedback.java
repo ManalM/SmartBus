@@ -40,6 +40,8 @@ String studentName;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Driver feedback");
+
         //---------------------recyclerView-----------------------
         setContentView(R.layout.fragment_driver_feedback);
         recyclerView = findViewById(R.id.diver_feedback);

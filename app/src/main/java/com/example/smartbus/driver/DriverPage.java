@@ -55,6 +55,7 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_page);
+
         //-------------------Drawer and Toolbar-----------------
         Toolbar toolbar = findViewById(R.id.driver_toolbar);
         setSupportActionBar(toolbar);

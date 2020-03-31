@@ -28,6 +28,8 @@ public class EditStudentProfile extends AppCompatActivity implements View.OnClic
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_student_profile);
+        getSupportActionBar().setTitle("Edit Profile");
+
         health = findViewById(R.id.student_health);
         phone = findViewById(R.id.student_phone);
 

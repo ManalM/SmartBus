@@ -34,6 +34,8 @@ public class EditDriverProfile extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_driver_profile);
+        getSupportActionBar().setTitle("Edit Profile");
+
         phone = findViewById(R.id.driver_phone);
 
         email = findViewById(R.id.driver_email);

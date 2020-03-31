@@ -3,6 +3,7 @@ package com.example.smartbus.student;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartbus.R;
+import com.example.smartbus.driver.EditDriverProfile;
 import com.example.smartbus.driver.StudentProfile;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.HttpsRetrieve;
@@ -62,6 +64,7 @@ public class RateDriver extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_rate_driver);
+        getSupportActionBar().setTitle("Rating Driver");
 
         save = findViewById(R.id.send_driver_rate);
         comment = findViewById(R.id.driver_comment);
@@ -75,7 +78,7 @@ public class RateDriver extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                MediaPlayer.create(RateDriver.this, R.raw.correct).start();
                 updateDB();
             }
         });

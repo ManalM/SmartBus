@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.textclassifier.TextLinks;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.smartbus.driver.DriverPage;
+import com.example.smartbus.driver.EditDriverProfile;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.RequestHandler;
 import com.example.smartbus.server.SharedPrefManager;
@@ -48,14 +50,7 @@ public class SigninActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
-/*
 
-        if(SharedPrefManager.getInstance(this).isLoggedIn()){
-            finish();
-            startActivity(new Intent(this, DriverPage.class));
-            return;
-        }
-*/
 
         // connect with xml
         username = (EditText) findViewById(R.id.username);
@@ -93,15 +88,15 @@ public class SigninActivity extends AppCompatActivity {
                                        null
                                 );
                         if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("d")) {
+                            MediaPlayer.create(SigninActivity.this, R.raw.correct).start();
                             startActivity(new Intent(getApplicationContext(), DriverPage.class));
                             finish();
                         } else if (SharedPrefManager.getInstance(SigninActivity.this).getUsername().startsWith("p")) {
+                            MediaPlayer.create(SigninActivity.this, R.raw.correct).start();
                             startActivity(new Intent(getApplicationContext(), StudentList.class));
                             finish();
                         } else {
                             Toast.makeText(SigninActivity.this, "Error in username", Toast.LENGTH_SHORT).show();
-                       /*     startActivity(new Intent(getApplicationContext(), DriverPage.class));
-                            finish();*/
                         }
                     }else{
                         Toast.makeText(
