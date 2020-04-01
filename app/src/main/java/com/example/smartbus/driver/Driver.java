@@ -1,12 +1,18 @@
 package com.example.smartbus.driver;
 
+import android.content.Context;
+
+import com.example.smartbus.server.SharedPrefManager;
+
 public class Driver {
-    double lat ,lng;
-  String  driverId;
-   public Driver(double lat,  double lng ){
+  public   double lat ,lng;
+ public String  driverId;
+
+
+    public Driver(double lat, double lng, String driverId ){
     this.lat = lat;
     this.lng =lng;
-    driverId = "0000";
+    this.driverId = driverId;
 
    }
 

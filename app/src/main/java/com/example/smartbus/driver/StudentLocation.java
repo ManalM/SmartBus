@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,25 +17,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.smartbus.R;
+import com.example.smartbus.interfaces.LatLngInterpolator;
+import com.example.smartbus.server.SharedPrefManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static android.telephony.CellLocation.requestLocationUpdate;
 
 public class StudentLocation extends AppCompatActivity  implements OnMapReadyCallback{
 
+    private static final String MAP_VIEW_BUNDLE_KEY ="map_key" ;
     //-----
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2200;
 
@@ -46,36 +53,35 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
     private boolean driverOnlineFlag = true;
     private Marker currentPositionMarker = null;
     private GoogleMapHelper googleMapHelper ;
-    private FirebaseHelper firebaseHelper ;
     private MarkerAnimationHelper markerAnimationHelper ;
     private UiHelper uiHelper = new UiHelper();
     MapView mapView;
+    DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_location);
-     /*   SupportMapFragment mapFragment = supportFragmentManager.findFragmentById(R.id.supportMap) as SupportMapFragment
-    mapFragment.getMapAsync { googleMap = it }*/
          mapView = findViewById(R.id.location);
         markerAnimationHelper = new MarkerAnimationHelper();
-        firebaseHelper = new FirebaseHelper("0000");
+        //firebaseHelper = new FirebaseHelper("Drivers");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         googleMapHelper = new GoogleMapHelper();
         // -------------------mapView-----------------
         Bundle mapViewBundle = null;
-/*    if (savedInstanceState != null) {
+    if (savedInstanceState != null) {
         mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
-    }*/
+    }
 
-        //  mapView.onCreate(mapViewBundle);
+          mapView.onCreate(mapViewBundle);
 
        //
           mapView.getMapAsync(this);
 
-        //createLocationCallback();
+        createLocationCallback();
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = uiHelper.getLocationRequest();
         if (!uiHelper.isPlayServicesAvailable(this)) {
-            Toast.makeText(this, "Play Services did not installed!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StudentLocation.this, "Play Services did not installed!", Toast.LENGTH_SHORT).show();
             finish();
         } else requestLocationUpdate();
 
@@ -99,28 +105,30 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
             return;
         }
         if (uiHelper.isLocationProviderEnabled(this))
+       /*     uiHelper.showPositiveDialogWithListener(this, resources.getString(R.string.need_location), resources.getString(R.string.location_content), object : IPositiveNegativeListener {
+            override fun onPositive() {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }, "Turn On", false);*/
+      // showPositiveDialogWithListener(this,"need your location","are you agree to access your location","ok",true);
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 
-        // showPositiveDialogWithListener(this, "Need Location", "we need your location", "Turn On", false);
+        locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
 
-     /*   try {
-            locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-        }catch (NullPointerException e){
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }*/
-        }
-
-    private void showOrAnimateMarker(LatLng latLng) {
+/*    private void showOrAnimateMarker(LatLng latLng) {
         if (currentPositionMarker == null)
             currentPositionMarker = gMap.addMarker(googleMapHelper.getDriverMarkerOptions(latLng));
         else
             markerAnimationHelper.animateMarkerToGB(currentPositionMarker, latLng, new LatLngInterpolator.Spherical());
-    }
+    }*/
 
+/*
     private void animateCamera(LatLng latLng) {
         CameraUpdate cameraUpdate = googleMapHelper.buildCameraUpdate(latLng);
         gMap.animateCamera(cameraUpdate, 10, null);
     }
+*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -134,32 +142,30 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
         }
     }
 
-/*    private void createLocationCallback() {
+    private void createLocationCallback() {
         locationCallback  = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
                 LatLng latLng;
-                if (locationResult != null) return;
+                if (locationResult.getLastLocation() ==null ) return;
 
                 latLng = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
                 Log.e("Location", latLng.latitude + " , " + latLng.longitude);
-                if (locationFlag) {
+                Toast.makeText(StudentLocation.this, latLng.latitude + " , " + latLng.longitude, Toast.LENGTH_SHORT).show();
+           /*     if (locationFlag) {
                     locationFlag = false;
-                    animateCamera(latLng);
-                }
-                if (driverOnlineFlag)
-                    firebaseHelper.updateDriver(new Driver(latLng.latitude, latLng.longitude));
-                showOrAnimateMarker(latLng);
+                }*/
+
+                databaseReference.child("ONLINE_DRIVERS").child("Drivers").setValue(new Driver(latLng.latitude,latLng.longitude,SharedPrefManager.getInstance(StudentLocation.this).getUsername()));
+
             }
 
 
         };
-    }*/
+    }
 
-
-/*
     public void showPositiveDialogWithListener(Context callingClassContext, String title, String content, String positiveText, Boolean cancelable) {
         AlertDialog.Builder buildDialog = new AlertDialog.Builder(callingClassContext);
         buildDialog.setTitle(title);
@@ -174,8 +180,7 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
          buildDialog.setCancelable(cancelable)
                 .show();
     }
-*/
-/*
+
 
     @Override
     protected void onResume() {
@@ -209,8 +214,6 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
         super.onLowMemory();
         mapView.onLowMemory();
     }
-*/
-//todo:display nothing try on kotlin project
     @Override
     public void onMapReady(GoogleMap googleMap) {
        gMap = googleMap;
@@ -222,13 +225,13 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
         uiSettings.setMapToolbarEnabled(true);
         uiSettings.setCompassEnabled(true);
         uiSettings.setZoomControlsEnabled(true);
-/*        LatLng ny = new LatLng(24.160247, 47.272907);
+        LatLng ny = new LatLng(24.160247, 47.272907);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(ny);
         gMap.addMarker(markerOptions);
-        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ny,18));*/
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ny,18));
 
-        locationCallback  = new LocationCallback() {
+  /*      locationCallback  = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
@@ -249,6 +252,8 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
 
 
         };
-        locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-    }
+        locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());*/
+}
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.smartbus.driver;
+package com.example.smartbus.interfaces;
 
 import com.google.android.gms.maps.model.LatLng;
 
