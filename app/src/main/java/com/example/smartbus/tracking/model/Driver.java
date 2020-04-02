@@ -1,4 +1,4 @@
-package com.example.smartbus.driver;
+package com.example.smartbus.tracking.model;
 
 import android.content.Context;
 

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,14 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.smartbus.R;
-import com.example.smartbus.interfaces.LatLngInterpolator;
 import com.example.smartbus.server.SharedPrefManager;
+import com.example.smartbus.tracking.helper.GoogleMapHelper;
+import com.example.smartbus.tracking.helper.MarkerAnimationHelper;
+import com.example.smartbus.tracking.model.Driver;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,7 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
+import com.example.smartbus.driver.UiHelper;
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -49,9 +49,9 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
     private static FusedLocationProviderClient locationProviderClient;
     private static LocationRequest locationRequest;
     private static LocationCallback locationCallback;
-    private boolean locationFlag = true;
+/*    private boolean locationFlag = true;
     private boolean driverOnlineFlag = true;
-    private Marker currentPositionMarker = null;
+    private Marker currentPositionMarker = null;*/
     private GoogleMapHelper googleMapHelper ;
     private MarkerAnimationHelper markerAnimationHelper ;
     private UiHelper uiHelper = new UiHelper();
@@ -159,6 +159,8 @@ public class StudentLocation extends AppCompatActivity  implements OnMapReadyCal
                 }*/
 
                 databaseReference.child("ONLINE_DRIVERS").child("Drivers").setValue(new Driver(latLng.latitude,latLng.longitude,SharedPrefManager.getInstance(StudentLocation.this).getUsername()));
+
+
 
             }
 

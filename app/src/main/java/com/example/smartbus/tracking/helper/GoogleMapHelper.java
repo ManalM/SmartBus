@@ -1,4 +1,4 @@
-package com.example.smartbus.driver;
+package com.example.smartbus.tracking.helper;
 
 import com.example.smartbus.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -22,7 +22,7 @@ public class GoogleMapHelper {
     }
 
     public MarkerOptions getDriverMarkerOptions(LatLng position){
-        MarkerOptions options = getMarkerOptions(R.drawable.bus, position);
+        MarkerOptions options = getMarkerOptions(R.drawable.tracking, position);
         options.flat(true);
         return options;
     }

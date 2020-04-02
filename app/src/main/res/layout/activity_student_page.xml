@@ -25,12 +25,17 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <com.google.android.gms.maps.MapView
+    <!--    <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            android:layout_margin="20dp" />
-
+            android:layout_margin="20dp" />-->
+        <fragment
+            android:id="@+id/supportMap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="spartons.com.frisbeeGo.fragments.MapFragment" />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="100dp"

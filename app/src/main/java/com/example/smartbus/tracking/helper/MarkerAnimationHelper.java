@@ -1,13 +1,12 @@
-package com.example.smartbus.driver;
+package com.example.smartbus.tracking.helper;
 
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.example.smartbus.interfaces.LatLngInterpolator;
+import com.example.smartbus.tracking.interfaces.LatLngInterpolator;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-//todo:delete from driver and use in student
 public class MarkerAnimationHelper {
       public void animateMarkerToGB(final Marker marker, final LatLng finalPosition, final LatLngInterpolator latLngInterpolator) {
          final LatLng startPosition = marker.getPosition();
