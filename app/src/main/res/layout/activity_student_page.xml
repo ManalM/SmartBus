@@ -34,13 +34,15 @@
             android:id="@+id/supportMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             tools:context="spartons.com.frisbeeGo.fragments.MapFragment" />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="6dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="5dp">
 
@@ -54,17 +56,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Bus"
+                    android:text="State of your kid:"
                     android:textColor="#fff"
                     android:textSize="22sp" />
 
                 <TextView
+                    android:id="@+id/state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="your son has been arrived"
+                    android:text="your son at home"
                     android:textColor="#fff"
-                    android:textSize="18sp" />
+                    android:textSize="22sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
 

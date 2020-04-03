@@ -7,8 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,13 +21,11 @@ import android.widget.Toast;
 
 import com.example.smartbus.R;
 import com.example.smartbus.SigninActivity;
-import com.example.smartbus.driver.StudentLocation;
-import com.example.smartbus.driver.UiHelper;
-import com.example.smartbus.server.SharedPrefManager;
-import com.example.smartbus.tracking.FirebaseDriverListener;
-import com.example.smartbus.tracking.helper.FirebaseEventListenerHelper;
+import com.example.smartbus.tracking.helper.UiHelper;
+
 import com.example.smartbus.tracking.helper.GoogleMapHelper;
 import com.example.smartbus.tracking.helper.MarkerAnimationHelper;
+import com.example.smartbus.tracking.interfaces.LatLngInterpolator;
 import com.example.smartbus.tracking.model.Driver;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -43,6 +39,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -54,14 +51,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.onesignal.OneSignal;
 
-import java.util.ArrayList;
-
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class StudentPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,OnMapReadyCallback, FirebaseDriverListener {
+public class StudentPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
+    private static final String ROOT_TEXT = "ONLINE_DRIVERS";
     private DrawerLayout drawer;
-    private MapView mapView;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     //-----
     private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2200;
@@ -71,14 +66,13 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
     private static LocationRequest locationRequest;
     private static LocationCallback locationCallback;
     private boolean locationFlag = true;
-    private boolean driverOnlineFlag = true;
     private Marker currentPositionMarker = null;
     private GoogleMapHelper googleMapHelper;
     private MarkerAnimationHelper markerAnimationHelper;
-    private FirebaseEventListenerHelper valueEventListener;
     private UiHelper uiHelper = new UiHelper();
     DatabaseReference databaseReference;
     String nameOfStudent;
+    TextView state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +85,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
                 .init();
 
         //-------------------Drawer and Toolbar-----------------
+        state = findViewById(R.id.state);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -114,7 +109,6 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
 
 
         markerAnimationHelper = new MarkerAnimationHelper();
-        //firebaseHelper = new FirebaseHelper("Drivers");
         databaseReference = FirebaseDatabase.getInstance().getReference();
         googleMapHelper = new GoogleMapHelper();
         //-------------------mapView-------------------------
@@ -122,48 +116,31 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
         }
-        //mapView = findViewById(R.id.mapView);
-        //mapView.onCreate(mapViewBundle);
-        //mapView.getMapAsync(StudentPage.this);
-      createLocationCallback();
-       SupportMapFragment fragment =  (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.supportMap);
+
+        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.supportMap);
         fragment.getMapAsync(this);
         fragment.onCreate(mapViewBundle);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = uiHelper.getLocationRequest();
-        if (!uiHelper.isPlayServicesAvailable(this)) {
-            Toast.makeText(StudentPage.this, "Play Services did not installed!", Toast.LENGTH_SHORT).show();
-            finish();
-        } else requestLocationUpdate();
-/*        valueEventListener = new FirebaseEventListenerHelper(this);
-        databaseReference.addChildEventListener(valueEventListener);*/
-/*        databaseReference.child("ONLINE_DRIVERS").child("Drivers").addValueEventListener(new ValueEventListener() {
+
+
+        //----------------------state text ----------------------
+        databaseReference.child(ROOT_TEXT).child("student").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String s = dataSnapshot.child("state").getValue(String.class);
+                state.setText(s);
 
-              //  for (DataSnapshot data :dataSnapshot.getChildren()){
-                    Driver driver = dataSnapshot.getValue(Driver.class);
-                LatLng latLng = new LatLng(driver.lat, driver.lng);
-                    MarkerOptions markerOptions = googleMapHelper.getDriverMarkerOptions(latLng);
-                    Marker marker = gMap.addMarker(markerOptions);
-                    marker.setTag(driver.driverId);
-
-                //}
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
-
-
-
-        //Fragment fragment = (Fragment) findViewById(R.id.supportMap);
-        //val mapFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.supportMap) as SupportMapFragment
-        //mapFragment.getMapAsync { googleMap = it }
+        });
     }
-//-----------drawer function-----------------------------
+
+    //-----------drawer function-----------------------------
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -208,28 +185,32 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
     }
 //------------------------------tracking function------------------------
 
+/*
     private void requestLocationUpdate() {
         if (!uiHelper.isHaveLocationPermission(this)) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             return;
         }
         if (uiHelper.isLocationProviderEnabled(this))
-       /*     uiHelper.showPositiveDialogWithListener(this, resources.getString(R.string.need_location), resources.getString(R.string.location_content), object : IPositiveNegativeListener {
+*/
+/*         uiHelper.showPositiveDialogWithListener(this, resources.getString(R.string.need_location), resources.getString(R.string.location_content), object : IPositiveNegativeListener {
             override fun onPositive() {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
-        }, "Turn On", false);*/
+        }, "Turn On", false);
             // showPositiveDialogWithListener(this,"need your location","are you agree to access your location","ok",true);
-            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));*//*
+
 
         locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
+*/
 
     private void showOrAnimateMarker(LatLng latLng) {
         if (currentPositionMarker == null)
             currentPositionMarker = gMap.addMarker(googleMapHelper.getDriverMarkerOptions(latLng));
         else
-            markerAnimationHelper.animateMarkerToGB(currentPositionMarker, latLng, new com.example.smartbus.tracking.interfaces.LatLngInterpolator.Spherical());
+            markerAnimationHelper.animateMarkerToGB(currentPositionMarker, latLng, new LatLngInterpolator.Spherical());
     }
 
     private void animateCamera(LatLng latLng) {
@@ -237,7 +218,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         gMap.animateCamera(cameraUpdate, 10, null);
     }
 
-    @Override
+/*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
@@ -247,112 +228,25 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
                 finish();
             } else if (value == PERMISSION_GRANTED) requestLocationUpdate();
         }
-    }
-
-    private void createLocationCallback() {
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-
-                LatLng latLng;
-                if (locationResult.getLastLocation() == null) return;
-
-                latLng = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
-                Log.e("Location", latLng.latitude + " , " + latLng.longitude);
-              //  Toast.makeText(StudentPage.this, latLng.latitude + " , " + latLng.longitude, Toast.LENGTH_SHORT).show();
-                if (locationFlag) {
-                    locationFlag = false;
-                    animateCamera(latLng);
-
-                    // databaseReference.child("ONLINE_DRIVERS").child("Drivers").setValue(new com.example.smartbus.driver.Driver(latLng.latitude,latLng.longitude,SharedPrefManager.getInstance(StudentLocation.this).getUsername()));
-
-                }
-
-
-            }
-
-
-        };
-    }
-
-    @Override
-    public void onDriverAdded(Driver driver) {
-        // todo: delete the interface and make if driver click button put marker
-  /*      MarkerOptions markerOptions = googleMapHelper.getDriverMarkerOptions(new LatLng(driver.lat, driver.lng));
-        Marker marker = gMap.addMarker(markerOptions);
-        marker.setTag(driver.driverId);*/
-       /* MarkerCollection.insertMarker(marker);
-        totalOnlineDrivers.text = resources.getString(R.string.total_online_drivers).plus(" ").plus(MarkerCollection.allMarkers().size)
-*/
-    }
-
-    @Override
-    public void onDriverRemoved(Driver driver) {
-    }
-
-    @Override
-    public void onDriverUpdated(Driver driver) {
-
-    }
-    //------------------------------display map function ---------------------------------
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
-        if (mapViewBundle == null) {
-            mapViewBundle = new Bundle();
-            outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
-        }
-
-
-       // mapView.onSaveInstanceState(mapViewBundle);
-    }
-
- /*   @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        mapView.onPause();
-        super.onPause();
     }*/
+
+
+
+
+
+    //------------------------------display map function ---------------------------------
+
 
     @Override
     protected void onDestroy() {
-        //mapView.onDestroy();
 
         super.onDestroy();
-       // databaseReference.removeEventListener(valueEventListener);
         locationProviderClient.removeLocationUpdates(locationCallback);
     }
 
-/*    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
-
-   @Override
+    @Override
     public void onMapReady(GoogleMap googleMap) {
 
-       Toast.makeText(this, "onMapReady", Toast.LENGTH_SHORT).show();
         gMap = googleMap;
         gMap.setMinZoomPreference(12);
         gMap.setIndoorEnabled(true);
@@ -365,41 +259,37 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         LatLng ny = new LatLng(21.4916617, 39.2221246);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(ny);
- //    gMap.addMarker(markerOptions);
+           gMap.addMarker(markerOptions);
 
-        //  gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(24.161069, 47.272142), 18));
-       databaseReference.child("ONLINE_DRIVERS").child("Drivers").addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        databaseReference.child(ROOT_TEXT).child("Drivers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                 for (DataSnapshot data :dataSnapshot.getChildren()){
-            //  Driver driver = data.getValue(Driver.class);
-                     //todo:errroooor
-                     Toast.makeText(StudentPage.this, "for loop ", Toast.LENGTH_SHORT).show();
-                     if (data.exists()) {
-                         double lat = data.child("lat").getValue(Double.class);
-                         double lng = data.child("lng").getValue(Double.class);
-                         Driver driver = new Driver(lat, lng, "");
-                         LatLng latLng = new LatLng(driver.lat, driver.lng);
-                         Toast.makeText(StudentPage.this, latLng.latitude + "," + latLng.longitude, Toast.LENGTH_SHORT).show();
-                         MarkerOptions markerOptions = new MarkerOptions();
-                         markerOptions.position(latLng);
-                         gMap.addMarker(markerOptions);
-                         // MarkerOptions markerOptions = googleMapHelper.getDriverMarkerOptions(latLng);
-               /*Marker marker = gMap.addMarker(markerOptions);
-               marker.setTag(driver.driverId);*/
-                         animateCamera(latLng);
-                     }else{
-                         Toast.makeText(StudentPage.this, "null", Toast.LENGTH_SHORT).show();
-                     }
-              }
-           }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
+                if (dataSnapshot.exists()) {
+                    double lat = dataSnapshot.child("lat").getValue(Double.class);
+                    double lng = dataSnapshot.child("lng").getValue(Double.class);
+                    String driverId = dataSnapshot.child("driverId").getValue(String.class);
+                    Driver driver = new Driver(lat, lng, driverId);
+                    LatLng latLng = new LatLng(driver.lat, driver.lng);
+                    MarkerOptions options = new MarkerOptions();
+                    options.position(latLng);
+                    showOrAnimateMarker(latLng);
+        /*            Marker marker = gMap.addMarker(options);
+                    marker.setTag(driver.driverId);*/
+                    animateCamera(latLng);
 
-           }
-       });
+                } else {
+                    Toast.makeText(StudentPage.this, "null", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

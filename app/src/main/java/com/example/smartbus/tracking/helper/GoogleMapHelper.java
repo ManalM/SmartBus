@@ -15,14 +15,14 @@ public class GoogleMapHelper {
     public CameraUpdate buildCameraUpdate(LatLng latLng){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng)
-                .tilt(25)
-                .zoom(18)
+                .tilt(TILT_LEVEL)
+                .zoom(ZOOM_LEVEL)
                 .build();
         return CameraUpdateFactory.newCameraPosition(cameraPosition);
     }
 
     public MarkerOptions getDriverMarkerOptions(LatLng position){
-        MarkerOptions options = getMarkerOptions(R.drawable.tracking, position);
+        MarkerOptions options = getMarkerOptions(R.drawable.tracking_bus, position);
         options.flat(true);
         return options;
     }

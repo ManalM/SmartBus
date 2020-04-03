@@ -89,7 +89,7 @@ public class StudentProfile extends AppCompatActivity {
     }
 
     public void goToLocation(View view) {
-        startActivity(new Intent(StudentProfile.this, StudentLocation.class));
+        startActivity(new Intent(StudentProfile.this, StudentLocation.class).putExtra("nameOfStudent",getIntent().getStringExtra("nameOfStudent")));
     }
 
     public static class DataParser extends AsyncTask<Void, Void, Integer> {

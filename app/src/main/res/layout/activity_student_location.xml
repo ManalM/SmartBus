@@ -10,10 +10,20 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/location"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
 
         android:layout_margin="20dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button"
+        android:textColor="@color/textColor"
+        android:onClick="arrive"
+        android:text="Arrive" />
 
 
 </LinearLayout>

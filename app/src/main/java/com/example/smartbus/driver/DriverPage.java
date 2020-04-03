@@ -4,17 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,17 +43,40 @@ import java.util.ArrayList;
 import com.example.smartbus.SigninActivity;
 import com.example.smartbus.server.Constants;
 import com.example.smartbus.server.SharedPrefManager;
+import com.example.smartbus.tracking.helper.GoogleMapHelper;
+import com.example.smartbus.tracking.helper.MarkerAnimationHelper;
+import com.example.smartbus.tracking.helper.UiHelper;
+import com.example.smartbus.tracking.model.Driver;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static android.content.pm.PackageManager.PERMISSION_DENIED;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class DriverPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
     public ListAdapter listAdapter;
+    private final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2200;
+
+    private static FusedLocationProviderClient locationProviderClient;
+    private static LocationRequest locationRequest;
+    private static LocationCallback locationCallback;
+
+    private UiHelper uiHelper;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +108,21 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
 
         DataParser https = new DataParser(DriverPage.this, Constants.getStudentUrl, recyclerView, spase, listAdapter, "id_driver");
         https.execute();
+
+        //-----------get driver location--------------
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        uiHelper = new UiHelper();
+        createLocationCallback();
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        locationRequest = uiHelper.getLocationRequest();
+        if (!uiHelper.isPlayServicesAvailable(this)) {
+            Toast.makeText(DriverPage.this, "Play Services did not installed!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else requestLocationUpdate();
+
     }
 
+    //------------------drawer function -----------------
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -112,8 +152,60 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
+    //---------------------- get location of driver function -----------------
+
+    private void requestLocationUpdate() {
+        if (!uiHelper.isHaveLocationPermission(this)) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            return;
+        }
+        if (uiHelper.isLocationProviderEnabled(this))
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
+        locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {
+            int value = grantResults[0];
+            if (value == PERMISSION_DENIED) {
+                Toast.makeText(this, "Location Permission denied", Toast.LENGTH_SHORT).show();
+                finish();
+            } else if (value == PERMISSION_GRANTED) requestLocationUpdate();
+        }
+    }
+
+    private void createLocationCallback() {
+        locationCallback  = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                LatLng latLng;
+                if (locationResult.getLastLocation() ==null ) return;
+
+                latLng = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
+                Log.e("Location", latLng.latitude + " , " + latLng.longitude);
+                Toast.makeText(DriverPage.this, latLng.latitude + " , " + latLng.longitude, Toast.LENGTH_SHORT).show();
+           /*     if (locationFlag) {
+                    locationFlag = false;
+                }*/
+
+                databaseReference.child("ONLINE_DRIVERS").child("Drivers").setValue(new Driver(latLng.latitude,latLng.longitude,SharedPrefManager.getInstance(DriverPage.this).getUsername()));
+
+
+
+            }
+
+
+        };
+    }
+
     //-------------------------------------------------------------------------
-    /// --------------------- retrieve  data ----------------------------------
+    /// --------------------- retrieve  data inner class ----------------------------------
     //-------------------------------------------------------------------------
 
 

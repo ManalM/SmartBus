@@ -1,4 +1,4 @@
-package com.example.smartbus.driver;
+package com.example.smartbus.tracking.helper;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -37,15 +37,6 @@ public class UiHelper {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         return !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-/*    public void  showPositiveDialogWithListener(Context callingClassContext, String title, String content, android.view. View.OnClickListener positiveNegativeListener, String positiveText, Boolean cancelable) {
-        AlertDialog.Builder buildDialog = new AlertDialog.Builder(callingClassContext);
-        buildDialog.setTitle(title);
-        buildDialog.setMessage(content);
-        buildDialog.setPositiveButton(positiveText,new positiveNegativeListener)
-                .positiveColor(R.color.colorPrimary)
-                .cancelable(cancelable)
-                .show();
-    }*/
 
 
     public LocationRequest getLocationRequest(){

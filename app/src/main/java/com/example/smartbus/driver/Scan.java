@@ -28,6 +28,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.database.FirebaseDatabase;
 import com.onesignal.OneSignal;
 
 import java.io.IOException;
@@ -40,12 +41,13 @@ import static com.example.smartbus.server.Constants.Driver;
 import static com.example.smartbus.server.Constants.User;
 
 public class Scan extends AppCompatActivity {
-
+    String name;
     private static final int MY_PERMISSIONS_REQUEST = 100;
     SurfaceView surfaceView;
     CameraSource cameraSource;
     BarcodeDetector barcodeDetector;
-ImageView correct;
+    ImageView correct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,9 @@ ImageView correct;
         OneSignal.sendTag("User_ID", Driver);
         //----------------------------------------
         surfaceView = findViewById(R.id.surfaceView);
-        correct= findViewById(R.id.image);
+        correct = findViewById(R.id.image);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("nameOfStudent");
         //-----------------barcode------------------
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
@@ -111,7 +115,8 @@ ImageView correct;
                         // todo:problem of sending many notification
                         m.start();
                         sendNotification();
-                        startActivity(new Intent(Scan.this,DriverPage.class));
+                        FirebaseDatabase.getInstance().getReference().child("ONLINE_DRIVERS").child("student").child("state").setValue(name + "  is on the bus");
+                        startActivity(new Intent(Scan.this, DriverPage.class));
      /*                   AlertDialog builder = new AlertDialog.Builder(Scan.this).create();
                         builder.setButton(AlertDialog.BUTTON_NEUTRAL,"send notification !", new DialogInterface.OnClickListener() {
                             @Override
@@ -124,7 +129,7 @@ ImageView correct;
 
                         builder.setIcon(R.drawable.correct);
                         builder.show();*/
-                   }
+                    }
                 }
             }
         });
@@ -132,8 +137,7 @@ ImageView correct;
 
     private void sendNotification() {
 
-        Intent intent = getIntent();
-        final String name = intent.getStringExtra("nameOfStudent");
+
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -198,6 +202,7 @@ ImageView correct;
             }
         });
     }
+
     private void animateHeart() {
         Animation likeAnim = AnimationUtils.loadAnimation(Scan.this, R.anim.animation);
         correct.setVisibility(View.VISIBLE);
