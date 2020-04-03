@@ -117,18 +117,6 @@ public class Scan extends AppCompatActivity {
                         sendNotification();
                         FirebaseDatabase.getInstance().getReference().child("ONLINE_DRIVERS").child("student").child("state").setValue(name + "  is on the bus");
                         startActivity(new Intent(Scan.this, DriverPage.class));
-     /*                   AlertDialog builder = new AlertDialog.Builder(Scan.this).create();
-                        builder.setButton(AlertDialog.BUTTON_NEUTRAL,"send notification !", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                sendNotification();
-                                startActivity(new Intent(Scan.this,DriverPage.class));
-
-                            }
-                        });
-
-                        builder.setIcon(R.drawable.correct);
-                        builder.show();*/
                     }
                 }
             }
@@ -203,27 +191,6 @@ public class Scan extends AppCompatActivity {
         });
     }
 
-    private void animateHeart() {
-        Animation likeAnim = AnimationUtils.loadAnimation(Scan.this, R.anim.animation);
-        correct.setVisibility(View.VISIBLE);
-        correct.startAnimation(likeAnim);
-        likeAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                correct.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-    }
 
 }
 
