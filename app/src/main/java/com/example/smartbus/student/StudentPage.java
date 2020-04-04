@@ -241,7 +241,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
     protected void onDestroy() {
 
         super.onDestroy();
-        locationProviderClient.removeLocationUpdates(locationCallback);
+        //locationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     @Override

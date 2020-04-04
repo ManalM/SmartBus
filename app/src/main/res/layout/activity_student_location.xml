@@ -21,9 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/button"
-        android:textColor="@color/textColor"
         android:onClick="arrive"
-        android:text="Arrive" />
+        android:text="Arrive"
+        android:textColor="@color/textColor" />
 
 
 </LinearLayout>
