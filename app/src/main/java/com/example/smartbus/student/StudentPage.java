@@ -256,7 +256,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         uiSettings.setMapToolbarEnabled(true);
         uiSettings.setCompassEnabled(true);
         uiSettings.setZoomControlsEnabled(true);
-        LatLng ny = new LatLng(21.4916617, 39.2221246);
+        LatLng ny = new LatLng(24.160247, 47.272907);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(ny);
            gMap.addMarker(markerOptions);
