@@ -204,19 +204,7 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
 
         locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
-*/
 
-    private void showOrAnimateMarker(LatLng latLng) {
-        if (currentPositionMarker == null)
-            currentPositionMarker = gMap.addMarker(googleMapHelper.getDriverMarkerOptions(latLng));
-        else
-            markerAnimationHelper.animateMarkerToGB(currentPositionMarker, latLng, new LatLngInterpolator.Spherical());
-    }
-
-    private void animateCamera(LatLng latLng) {
-        CameraUpdate cameraUpdate = googleMapHelper.buildCameraUpdate(latLng);
-        gMap.animateCamera(cameraUpdate, 10, null);
-    }
 
 /*    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -230,6 +218,17 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
         }
     }*/
 
+    private void showOrAnimateMarker(LatLng latLng) {
+        if (currentPositionMarker == null)
+            currentPositionMarker = gMap.addMarker(googleMapHelper.getDriverMarkerOptions(latLng));
+        else
+            markerAnimationHelper.animateMarkerToGB(currentPositionMarker, latLng, new LatLngInterpolator.Spherical());
+    }
+
+    private void animateCamera(LatLng latLng) {
+        CameraUpdate cameraUpdate = googleMapHelper.buildCameraUpdate(latLng);
+        gMap.animateCamera(cameraUpdate, 10, null);
+    }
 
 
 
@@ -275,8 +274,6 @@ public class StudentPage extends AppCompatActivity implements NavigationView.OnN
                     MarkerOptions options = new MarkerOptions();
                     options.position(latLng);
                     showOrAnimateMarker(latLng);
-        /*            Marker marker = gMap.addMarker(options);
-                    marker.setTag(driver.driverId);*/
                     animateCamera(latLng);
 
                 } else {

@@ -111,12 +111,13 @@ public class Scan extends AppCompatActivity {
                     MediaPlayer m = MediaPlayer.create(Scan.this, R.raw.correct);
                     if (!qr.valueAt(0).displayValue.isEmpty()) {
                         v.vibrate(100);
-                        //todo:show dialog and try the library of scanning
+
                         // todo:problem of sending many notification
                         m.start();
                         sendNotification();
                         FirebaseDatabase.getInstance().getReference().child("ONLINE_DRIVERS").child("student").child("state").setValue(name + "  is on the bus");
                         startActivity(new Intent(Scan.this, DriverPage.class));
+                        finish();
                     }
                 }
             }

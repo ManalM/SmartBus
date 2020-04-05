@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/lightGreen"
-        android:text="CARD NUMBER"
+        android:hint="CARD NUMBER"
         android:textColor="#8B887B" />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/lightGreen"
-        android:text="NAME OF THE CARD HOLDER"
+        android:hint="NAME OF THE CARD HOLDER"
         android:textColor="#8B887B" />
 
     <EditText
@@ -45,7 +45,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/lightGreen"
-        android:text="EXPIRY DATE"
+        android:hint="EXPIRY DATE"
         android:textColor="#8B887B" />
     <EditText
         android:id="@+id/cvc"
@@ -55,7 +55,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/lightGreen"
-        android:text="CVC"
+        android:hint="CVC"
         android:textColor="#8B887B" />
 
     <Button

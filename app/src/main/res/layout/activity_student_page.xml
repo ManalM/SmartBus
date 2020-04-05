@@ -34,11 +34,13 @@
             android:id="@+id/supportMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
             tools:context="spartons.com.frisbeeGo.fragments.MapFragment" />
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             app:cardCornerRadius="5dp"
             android:elevation="6dp"

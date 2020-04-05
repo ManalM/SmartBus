@@ -190,9 +190,6 @@ public class DriverPage extends AppCompatActivity implements NavigationView.OnNa
                 latLng = new LatLng(locationResult.getLastLocation().getLatitude(), locationResult.getLastLocation().getLongitude());
                 Log.e("Location", latLng.latitude + " , " + latLng.longitude);
                 Toast.makeText(DriverPage.this, latLng.latitude + " , " + latLng.longitude, Toast.LENGTH_SHORT).show();
-           /*     if (locationFlag) {
-                    locationFlag = false;
-                }*/
 
                 databaseReference.child("ONLINE_DRIVERS").child("Drivers").setValue(new Driver(latLng.latitude,latLng.longitude,SharedPrefManager.getInstance(DriverPage.this).getUsername()));
 
